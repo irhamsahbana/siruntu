@@ -89,7 +89,10 @@
                 <div class="input-group">
                 <input type="text" name="message" placeholder="Type Message ..." class="form-control">
                 <span class="input-group-append">
-                    <button type="button" class="btn btn-primary">Kirim</button>
+                    <button
+                        id="btn-send-chat"
+                        type="button"
+                        class="btn btn-primary">Kirim</button>
                 </span>
                 </div>
             </form>

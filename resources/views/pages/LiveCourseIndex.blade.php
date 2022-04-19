@@ -19,11 +19,9 @@
 @endsection
 
 @push('js')
-    <script>
-        $(document).ready(function () {
-            $('#btn-change-mode').on('click', function () {
-                alert('tombol ubah mode diklik');
-            });
-        });
-    </script>
+    <input type="hidden" id="hostname" value="{{ env('APP_URL') }}">
+
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets') }}/workspace/socketClient.js"></script>
+    <script src="{{ asset('assets') }}/workspace/liveCourse.js"></script>
 @endpush

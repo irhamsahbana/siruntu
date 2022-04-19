@@ -14,5 +14,13 @@
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14"
+    },
+    "dependencies": {
+        "express": "^4.17.3",
+        "kurento-client": "^6.16.0",
+        "minimist": "^1.2.6",
+        "socket.io": "^4.4.1",
+        "socket.io-client": "^4.4.1",
+        "ws": "^8.5.0"
     }
 }
