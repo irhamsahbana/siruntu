@@ -1,7 +1,7 @@
 ID,CATEGORY_ID,NAME,LABEL,NOTES,GROUP_BY
 1,,administrator,Administrator,Administrator,people
-2,,learner,learner,Mahasiswa,people
-3,,lecturer,lecturer,Dosen,people
+2,,learner,Mahasiswa,Mahasiswa,people
+3,,lecturer,Dosen,Dosen,people
 11,,category-semester-read,category-semester-read,Kategori Semester - Baca,permissions
 12,,category-semester-create,category-semester-create,Kategori Semester - Buat,permissions
 13,,category-semester-delete,category-semester-delete,Kategori Semester - Hapus,permissions
@@ -11,3 +11,5 @@ ID,CATEGORY_ID,NAME,LABEL,NOTES,GROUP_BY
 400,,administrator,Administrator,Administrator,permission_groups
 401,,lecturer,Dosen,Dosen,permission_groups
 402,,learner,Mahasiswa,Mahasiswa,permission_groups
+3000,,__delimiter__1,__delimiter__,__delimiter__,__delimiter__1
+4000,,__delimiter__2,__delimiter__,__delimiter__,__delimiter__2
