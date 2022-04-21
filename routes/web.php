@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\{
+    AccessRightController,
+    AuthController,
     CategoryController,
-    AccessRightController
 };
 
 /*
@@ -18,14 +19,23 @@ use App\Http\Controllers\{
 |
 */
 
-Route::get('/', function () {
-    return view('App');
+Route::group(['middleware' => ['guest']], function() {
+    Route::view('/login', 'pages.LoginIndex')->name('auth.login');
+    Route::post('login', [AuthController::class, 'attempt'])->name('auth.login-attempt');
 });
 
-Route::view('kursus-langsung', 'pages.LiveCourseIndex');
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/', function () {
+        return view('App');
+    })->name('app');
 
-Route::get('/hak-akses/detail/{id}', [AccessRightController::class, 'show'])->name('access-right.show');
-Route::delete('/hak-akses/{id}', [AccessRightController::class, 'destroy'])->name('access-right.destroy');
-Route::patch('/hak-akses/{id}', [AccessRightController::class, 'update'])->name('access-right.update');
-Route::post('/hak-akses', [AccessRightController::class, 'store'])->name('access-right.store');
-Route::get('/hak-akses', [AccessRightController::class, 'index'])->name('access-right.index');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+    Route::view('kursus-langsung', 'pages.LiveCourseIndex');
+
+    Route::get('/hak-akses/detail/{id}', [AccessRightController::class, 'show'])->name('access-right.show');
+    Route::delete('/hak-akses/{id}', [AccessRightController::class, 'destroy'])->name('access-right.destroy');
+    Route::patch('/hak-akses/{id}', [AccessRightController::class, 'update'])->name('access-right.update');
+    Route::post('/hak-akses', [AccessRightController::class, 'store'])->name('access-right.store');
+    Route::get('/hak-akses', [AccessRightController::class, 'index'])->name('access-right.index');
+});

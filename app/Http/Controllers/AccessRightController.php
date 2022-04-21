@@ -33,6 +33,7 @@ class AccessRightController extends Controller
         $row->notes = $request->notes;
 
         $repo = new AccessRight($row);
+        $repo->setAccessControl($this->getAccessControl());
         $repo->save();
 
         return redirect()->back()->with('message', 'Hak akses berhasil disimpan.');
@@ -45,6 +46,7 @@ class AccessRightController extends Controller
         $row->notes = $request->notes;
 
         $repo = new AccessRight($row);
+        $repo->setAccessControl($this->getAccessControl());
 
         if ($request->permission_ids)
         foreach ($request->permission_ids as $permission_id)
@@ -73,6 +75,7 @@ class AccessRightController extends Controller
         $row = $this->getModel($id);
 
         $repo = new AccessRight($row);
+        $repo->setAccessControl($this->getAccessControl());
         $repo->delete();
 
         return redirect()->back()->with('message', 'Hak akses berhasil dihapus.');

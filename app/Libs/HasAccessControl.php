@@ -2,15 +2,13 @@
 
 namespace App\Libs;
 
-use Illuminate\Support\Facades\Auth;
-
 use App\Libs\AccessControl;
 
 trait HasAccessControl
 {
     protected $accessControl;
 
-    public function setAccessControl($accessControl)
+    public function setAccessControl(?AccessControl $accessControl)
     {
         $this->accessControl = $accessControl;
     }
@@ -20,7 +18,7 @@ trait HasAccessControl
         return $this->accessControl;
     }
 
-    public function filterByAccessControl($access, $message = 'null')
+    public function filterByAccessControl($access, $message = null)
     {
         $accessControl = $this->getUserAccessControl();
 

@@ -42,7 +42,9 @@
                         </x-group>
 
                         <x-col class="text-right">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            @if(Auth::user()->hasAccess('access-right-create'))
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            @endif
                         </x-col>
                     </form>
                 </x-row>

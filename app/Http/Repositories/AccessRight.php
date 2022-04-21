@@ -19,11 +19,13 @@ class AccessRight extends AbstractRepository
 
     public function save()
     {
+        $this->filterByAccessControl('access-right-create');
         parent::save();
     }
 
     public function delete($permanent = null)
     {
+        $this->filterByAccessControl('access-right-delete');
         parent::delete($permanent);
     }
 

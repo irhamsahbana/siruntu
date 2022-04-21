@@ -53,7 +53,7 @@ class CategoryFinder extends AbstractFinder
 
     protected function doQuery()
     {
-        $this->filterByAccessControl('read_permission_groups');
+        $this->filterByAccessControl('access-right-read');
 
         $this->whereOrderBy();
         $this->whereGroups();
