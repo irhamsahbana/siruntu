@@ -22,6 +22,21 @@ class AccessRight extends AbstractRepository
         parent::save();
     }
 
+    public function delete($permanent = null)
+    {
+        parent::delete($permanent);
+    }
+
+    protected function afterDelete()
+    {
+        // Get all permission
+        Meta::where([
+            'fk_id' => $this->model->id,
+            'table_name' => $this->model->getTable(),
+            'key' => 'permission_id'
+        ])->delete();
+    }
+
     protected function beforeSave()
     {
         $this->generateData();

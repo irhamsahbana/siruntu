@@ -17,6 +17,8 @@ class AlterCategoriesTable extends Migration
             $table->index('category_id');
             $table->foreign('category_id')
             ->references('id')->on('categories');
+
+            $table->unique(['name', 'group_by']);
         });
     }
 
@@ -28,6 +30,8 @@ class AlterCategoriesTable extends Migration
     public function down()
     {
         Schema::table('categories', function (Blueprint $table) {
+            $table->dropUnique(['name', 'group_by']);
+
             $table->dropForeign(['category_id']);
             $table->dropIndex(['category_id']);
         });

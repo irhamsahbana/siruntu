@@ -40,7 +40,7 @@ class AccessRightController extends Controller
 
     public function update(AccessRightUpdateReq $request, $id)
     {
-        $row = Model::findOrFail($id);
+        $row = $this->getModel($id);
         $row->label = $request->label;
         $row->notes = $request->notes;
 
@@ -66,6 +66,16 @@ class AccessRightController extends Controller
         ])->get()->pluck('value');
 
         return view('pages.AccessRightDetail', compact('data', 'permissions', 'groupPermissions'));
+    }
+
+    public function destroy($id)
+    {
+        $row = $this->getModel($id);
+
+        $repo = new AccessRight($row);
+        $repo->delete();
+
+        return redirect()->back()->with('message', 'Hak akses berhasil dihapus.');
     }
 
     private function getModel($id)

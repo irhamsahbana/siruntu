@@ -11,3 +11,5 @@ ID,CATEGORY_ID,NAME,LABEL,NOTES,GROUP_BY
 400,,administrator,Administrator,Administrator,permission_groups
 401,,lecturer,Dosen,Dosen,permission_groups
 402,,learner,Mahasiswa,Mahasiswa,permission_groups
+3000,,__delimiter__1,__delimiter__,__delimiter__,__delimiter__1
+4000,,__delimiter__2,__delimiter__,__delimiter__,__delimiter__2

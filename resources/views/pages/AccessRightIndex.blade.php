@@ -23,7 +23,7 @@
                                             class="btn btn-warning"
                                             title="Ubah"><i class="fas fa-pencil-alt"></i></a>
 
-                                        <form style=" display:inline!important;" method="POST" action="#">
+                                        <form style=" display:inline!important;" method="POST" action="{{ route('access-right.destroy', $row->id) }}">
                                             @csrf
                                             @method('DELETE')
 

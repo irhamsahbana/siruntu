@@ -29,7 +29,7 @@
                             :col="12"
                             :name="'notes'"
                             :value="$data->notes"
-                            :required="false"></x-in-text>
+                            :required="true"></x-in-text>
 
                         <x-group :label="'Permission'">
                             @foreach ($permissions as $permission)
