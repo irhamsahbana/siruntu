@@ -74,5 +74,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset('assets') }}/workspace/adminLte3DarkMode.js"></script>
 <!-- Addtional JS -->
 @stack('js')
+@include('layouts.Toast')
 </body>
 </html>

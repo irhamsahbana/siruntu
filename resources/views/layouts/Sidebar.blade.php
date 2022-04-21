@@ -41,7 +41,7 @@
           <x-nav-item :icon="'fab fa-leanpub'" :text="'Master Kursus'" :href="'#'" />
           <x-nav-item :icon="'fab fa-leanpub'" :text="'Kursus'" :href="'#'" />
           <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="'#'" />
-          <x-nav-item :text="'Hak Akses'" :href="'#'" />
+          <x-nav-item :icon="'fas fa-list'" :text="'Hak Akses'" :href="route('access-right.index')" />
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

@@ -35,7 +35,7 @@ class CategorySeeder extends Seeder
                 'notes' => $category['NOTES'],
 
                 'created_at' => \Carbon\Carbon::now(),
-                'updated_at' => \Carbon\Carbon::now(),
+                'updated_at' => null,
             ]);
         }
     }
