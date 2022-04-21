@@ -8,7 +8,9 @@
             <x-card-collapsible>
                 <x-row>
                     <x-col class="mb-3">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
+                        @if(Auth::user()->hasAccess('access-right-read'))
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
+                        @endif
                     </x-col>
 
                     <x-col>
@@ -18,21 +20,25 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->label }}</td>
                                     <td>
-                                        <a
-                                            href="{{ route('access-right.show', $row->id) }}"
-                                            class="btn btn-warning"
-                                            title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+                                        @if(Auth::user()->hasAccess('access-right-read'))
+                                            <a
+                                                href="{{ route('access-right.show', $row->id) }}"
+                                                class="btn btn-warning"
+                                                title="Ubah"><i class="fas fa-pencil-alt"></i></a>
+                                        @endif
 
-                                        <form style=" display:inline!important;" method="POST" action="{{ route('access-right.destroy', $row->id) }}">
-                                            @csrf
-                                            @method('DELETE')
+                                        @if(Auth::user()->hasAccess('access-right-delete'))
+                                            <form style=" display:inline!important;" method="POST" action="{{ route('access-right.destroy', $row->id) }}">
+                                                @csrf
+                                                @method('DELETE')
 
-                                            <button
-                                                type="submit"
-                                                class="btn btn-danger"
-                                                onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
-                                                title="Hapus"><i class="fas fa-trash-alt"></i></button>
-                                        </form>
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-danger"
+                                                    onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')"
+                                                    title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

@@ -14,7 +14,7 @@
           <img src="{{ asset('assets') }}/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">John Doe</a>
+          <a href="#" class="d-block">{{ Auth::user()->person->name ?? "" }}</a>
         </div>
       </div>
 
@@ -41,7 +41,10 @@
           <x-nav-item :icon="'fab fa-leanpub'" :text="'Master Kursus'" :href="'#'" />
           <x-nav-item :icon="'fab fa-leanpub'" :text="'Kursus'" :href="'#'" />
           <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="'#'" />
-          <x-nav-item :icon="'fas fa-list'" :text="'Hak Akses'" :href="route('access-right.index')" />
+
+          @if(Auth::user()->hasAccess('access-right-read'))
+            <x-nav-item :icon="'fas fa-list'" :text="'Hak Akses'" :href="route('access-right.index')" />
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

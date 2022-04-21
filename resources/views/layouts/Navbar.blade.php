@@ -32,10 +32,10 @@
         </li>
 
         <li class="nav-item dropdown">
-          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">Username</a>
+          <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">{{ Auth::user()->username }}</a>
           <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
             <li><a href="#" class="dropdown-item">Pengaturan Akun</a></li>
-            <li><a href="#" class="dropdown-item">Keluar</a></li>
+            <li><a href="{{ route('auth.logout') }}" class="dropdown-item">Keluar</a></li>
           </ul>
         </li>
 

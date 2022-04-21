@@ -2,6 +2,8 @@
 
 namespace App\Libs;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Models\User;
 
 class AccessControl extends AbstractAccessControl
@@ -31,7 +33,7 @@ class AccessControl extends AbstractAccessControl
     public function getPermissions()
     {
         $permissions = DB::table('metas as permission_groups')
-            ->join('metas as permissions', 'permission_groups.value', '=','permission.fk_id')
+            ->join('metas as permissions', 'permission_groups.value', '=', 'permissions.fk_id')
             ->join('categories', 'categories.id', '=', 'permissions.value')
 
             ->where('permission_groups.table_name', 'users')

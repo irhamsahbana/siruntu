@@ -4,8 +4,12 @@ namespace App\Http\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Libs\HasAccessControl;
+
 abstract class AbstractRepository
 {
+    use HasAccessControl;
+
     protected Model $model;
     protected $original;
 
