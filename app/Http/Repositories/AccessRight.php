@@ -29,6 +29,12 @@ class AccessRight extends AbstractRepository
         parent::delete($permanent);
     }
 
+    public function get()
+    {
+        $this->filterByAccessControl('access-right-read');
+        return $this->model;
+    }
+
     protected function afterDelete()
     {
         // Get all permission

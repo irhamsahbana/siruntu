@@ -38,9 +38,10 @@
           <li class="nav-header">Master Data</li>
           <x-nav-item :icon="'fas fa-users'" :text="'Dosen'" :href="'#'" />
           <x-nav-item :icon="'fas fa-users'" :text="'Mahasiswa'" :href="'#'" />
-          <x-nav-item :icon="'fab fa-leanpub'" :text="'Master Kursus'" :href="'#'" />
-          <x-nav-item :icon="'fab fa-leanpub'" :text="'Kursus'" :href="'#'" />
-          <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="'#'" />
+          <x-nav-item :icon="'fab fa-leanpub'" :text="'Master Mata Kuliah'" :href="'#'" />
+          <x-nav-item :icon="'fab fa-leanpub'" :text="'Mata Kuliah'" :href="'#'" />
+
+          <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
 
           @if(Auth::user()->hasAccess('access-right-read'))
             <x-nav-item :icon="'fas fa-list'" :text="'Hak Akses'" :href="route('access-right.index')" />
