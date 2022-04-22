@@ -1,6 +1,30 @@
 @extends('App')
 
-@section('content-header', 'Hak Akses')
+@php
+    $categoryName = '';
+    $hasAccessCreate = false;
+    $hasAccessRead = false;
+    $hasAccessUpdate = false;
+    $hasAccessDelete = false;
+
+    $categories = [
+        ['group_by' => 'semester', 'label' => 'Semester', 'icon' => 'fas fa-newspaper'],
+    ];
+
+    foreach ($categories as $category) {
+        if ($category['group_by'] == app('request')->input('category')) {
+            $categoryName = $category['label'];
+
+            $hasAccessCreate = Auth::user()->hasAccess( sprintf('category-%s-create', $category['group_by']) );
+            $hasAccessRead = Auth::user()->hasAccess( sprintf('category-%s-read', $category['group_by']) );
+            // $hasAccessUpdate = Auth::user()->hasAccess( sprintf('category-%s-update', $category['group_by']) );
+            $hasAccessDelete = Auth::user()->hasAccess( sprintf('category-%s-delete', $category['group_by']) );
+            break;
+        }
+    }
+@endphp
+
+@section('content-header', 'Kategori - ' . $categoryName)
 
 @section('content')
     <x-content>
@@ -8,27 +32,28 @@
             <x-card-collapsible>
                 <x-row>
                     <x-col class="mb-3">
-                        @if(Auth::user()->hasAccess('access-right-create'))
+                        @if($hasAccessCreate)
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">Tambah</button>
                         @endif
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Hak Akses', 'Aksi']">
+                        <x-table :thead="['Nama', 'Catatan', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $row->label }}</td>
+                                    <td>{{ $row->notes }}</td>
                                     <td>
-                                        @if(Auth::user()->hasAccess('access-right-read'))
+                                        @if($hasAccessRead)
                                             <a
-                                                href="{{ route('access-right.show', $row->id) }}"
+                                                href="{{ route('category.show', $row->id) }}"
                                                 class="btn btn-warning"
                                                 title="Ubah"><i class="fas fa-pencil-alt"></i></a>
                                         @endif
 
-                                        @if(Auth::user()->hasAccess('access-right-delete'))
-                                            <form style=" display:inline!important;" method="POST" action="{{ route('access-right.destroy', $row->id) }}">
+                                        @if($hasAccessDelete)
+                                            <form style=" display:inline!important;" method="POST" action="{{ route('category.destroy', $row->id) }}">
                                                 @csrf
                                                 @method('DELETE')
 
@@ -54,14 +79,15 @@
     </x-content>
 
     <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'lg'">
-        <form style="width: 100%" action="{{ route('access-right.store') }}" method="POST">
+        <form style="width: 100%" action="{{ route('category.store') }}" method="POST">
             @csrf
             @method('POST')
 
             <x-row>
+                <input type="hidden" name="group_by" value="{{ app('request')->input('category') }}">
                 <x-in-text
                     :label="'Nama'"
-                    :placeholder="'Masukkan Nama Hak Akses'"
+                    :placeholder="'Masukkan Nama kategori'"
                     :col="6"
                     :name="'label'"
                     :required="true">

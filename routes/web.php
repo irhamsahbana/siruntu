@@ -38,4 +38,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/hak-akses/{id}', [AccessRightController::class, 'update'])->name('access-right.update');
     Route::post('/hak-akses', [AccessRightController::class, 'store'])->name('access-right.store');
     Route::get('/hak-akses', [AccessRightController::class, 'index'])->name('access-right.index');
+
+    Route::get('kategori/list', [CategoryController::class, 'list'])->name('category.list');
+    Route::delete('kategori/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::patch('/kategori/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::get('kategori/{id}', [CategoryController::class, 'show'])->name('category.show');
+    Route::get('kategori', [CategoryController::class, 'index'])->name('category.index');
+    Route::post('kategori', [CategoryController::class, 'store'])->name('category.store');
 });

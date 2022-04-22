@@ -88,6 +88,12 @@ class AccessRightController extends Controller
         if (empty($row))
             abort(404, 'Hak Akses tidak ditemukan.');
 
+        // insert $row to repository for checking access control
+        $repo = new AccessRight($row);
+        $repo->setAccessControl($this->getAccessControl());
+
+        $row = $repo->get();
+
         return $row;
     }
 }

@@ -34,4 +34,6 @@ ID,CATEGORY_ID,NAME,LABEL,NOTES,GROUP_BY
 401,,lecturer,Dosen,Dosen,permission_groups
 402,,learner,Mahasiswa,Mahasiswa,permission_groups
 3000,,__delimiter__1,__delimiter__,__delimiter__,__delimiter__1
+3001,,20212022-awal,2021/2022 Awal,2021/2022 Awal,semester
+3002,,20212022-akhir,2021/2022 Akhir,2021/2022 Akhir,semester
 4000,,__delimiter__2,__delimiter__,__delimiter__,__delimiter__2
