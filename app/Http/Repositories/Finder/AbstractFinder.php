@@ -9,6 +9,7 @@ abstract class AbstractFinder
     use HasAccessControl;
 
     protected $query;
+    protected $keyword;
     protected $isUsePagination = true;
     protected $orderBy;
     protected $orderType = 'asc';
@@ -52,6 +53,11 @@ abstract class AbstractFinder
     public function setIsUsePagination($isUsePagination)
     {
         $this->isUsePagination = $isUsePagination;
+    }
+
+    public function setKeyword($keyword)
+    {
+        $this->keyword = $keyword;
     }
 
     public function get()

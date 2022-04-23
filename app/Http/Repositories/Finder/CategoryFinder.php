@@ -2,7 +2,7 @@
 
 namespace App\Http\Repositories\Finder;
 
-use App\Models\Category;
+use App\Models\Category as Model;
 
 class CategoryFinder extends AbstractFinder
 {
@@ -10,7 +10,7 @@ class CategoryFinder extends AbstractFinder
 
     public function __construct()
     {
-        $this->query = Category::select('id', 'name', 'group_by', 'label', 'notes');
+        $this->query = Model::select('id', 'name', 'group_by', 'label', 'notes');
     }
 
     public function setGroup($groups)
@@ -18,10 +18,10 @@ class CategoryFinder extends AbstractFinder
         $this->groups = explode(",", $groups);
     }
 
-    public function setKeyword($keyword)
+    public function whereKeyword()
     {
-        if(!empty($keyword)) {
-            $list = explode(' ', $keyword);
+        if(!empty($this->keyword)) {
+            $list = explode(' ', $this->keyword);
             $list = array_map('trim', $list);
 
             $this->query->where(function($query) use ($list) {
@@ -60,7 +60,8 @@ class CategoryFinder extends AbstractFinder
                 $this->filterByAccessControl(sprintf('category-%s-read', $group), sprintf('Tidak memiliki hak akses untuk melihat data %s', $group));
         }
 
-        $this->whereOrderBy();
+        $this->whereKeyword();
         $this->whereGroups();
+        $this->whereOrderBy();
     }
 }

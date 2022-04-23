@@ -6,6 +6,7 @@ use App\Http\Controllers\{
     AccessRightController,
     AuthController,
     CategoryController,
+    CourseMasterController,
 };
 
 /*
@@ -45,4 +46,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('kategori/{id}', [CategoryController::class, 'show'])->name('category.show');
     Route::get('kategori', [CategoryController::class, 'index'])->name('category.index');
     Route::post('kategori', [CategoryController::class, 'store'])->name('category.store');
+
+    Route::get('/master-mata-kuliah/detail/{id}', [CourseMasterController::class, 'show'])->name('course-master.show');
+    Route::delete('/master-mata-kuliah/{id}', [CourseMasterController::class, 'destroy'])->name('course-master.destroy');
+    Route::patch('/master-mata-kuliah/{id}', [CourseMasterController::class, 'update'])->name('course-master.update');
+    Route::post('/master-mata-kuliah', [CourseMasterController::class, 'store'])->name('course-master.store');
+    Route::get('/master-mata-kuliah', [CourseMasterController::class, 'index'])->name('course-master.index');
 });
