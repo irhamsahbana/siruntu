@@ -5,10 +5,11 @@ namespace App\Http\Repositories;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Libs\HasAccessControl;
+use App\Libs\RefNoGenerator;
 
 abstract class AbstractRepository
 {
-    use HasAccessControl;
+    use HasAccessControl, RefNoGenerator;
 
     protected Model $model;
     protected $original;

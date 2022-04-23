@@ -10,26 +10,26 @@ ID,CATEGORY_ID,NAME,LABEL,NOTES,GROUP_BY
 16,,category-class-read,category-class-read,Kategori Kelas - Baca,permissions
 17,,category-class-update,category-class-update,Kategori Kelas - Ubah,permissions
 18,,category-class-delete,category-class-delete,Kategori Kelas - Hapus,permissions
-201,,course-create,course-create,Kelas - Buat,permissions
-202,,course-read,course-read,Kelas - Baca,permissions
-203,,course-update,course-update,Kelas - Ubah,permissions
-204,,course-delete,course-delete,Kelas - Hapus,permissions
-205,,learner-create,learner-create,Mahasiswa - Buat,permissions
-206,,learner-read,learner-read,Mahasiswa - Baca,permissions
-207,,learner-update,learner-update,Mahasiswa - Ubah,permissions
-208,,learner-delete,learner-delete,Mahasiswa - Hapus,permissions
-209,,lecturer-create,lecturer-create,Dosen - Buat,permissions
-210,,lecturer-read,lecturer-read,Dosen - Baca,permissions
-211,,lecturer-update,lecturer-update,Dosen - Ubah,permissions
-212,,lecturer-delete,lecturer-delete,Dosen - Hapus,permissions
-213,,access-right-create,access-right-create,Hak Akses - Buat,permissions
-214,,access-right-read,access-right-read,Hak Akses - Baca,permissions
-215,,access-right-update,access-right-update,Hak Akses - Ubah,permissions
-216,,access-right-delete,access-right-delete,Hak Akses - Hapus,permissions
-217,,course-master-create,course-master-create,Kelas Master - Buat,permissions
-218,,course-master-read,course-master-read,Kelas Master - Baca,permissions
-219,,course-master-update,course-master-update,Kelas Master - Ubah,permissions
-220,,course-master-delete,course-master-delete,Kelas Master - Hapus,permissions
+201,,course-master-create,course-master-create,Master Mata Kuliah - Buat,permissions
+202,,course-master-read,course-master-read,Master Mata Kuliah - Baca,permissions
+203,,course-master-update,course-master-update,Master Mata Kuliah - Ubah,permissions
+204,,course-master-delete,course-master-delete,Master Mata Kuliah - Hapus,permissions
+205,,course-create,course-create,Mata Kuliah - Buat,permissions
+206,,course-read,course-read,Mata Kuliah - Baca,permissions
+207,,course-update,course-update,Mata Kuliah - Ubah,permissions
+208,,course-delete,course-delete,Mata Kuliah - Hapus,permissions
+209,,learner-create,learner-create,Mahasiswa - Buat,permissions
+210,,learner-read,learner-read,Mahasiswa - Baca,permissions
+211,,learner-update,learner-update,Mahasiswa - Ubah,permissions
+212,,learner-delete,learner-delete,Mahasiswa - Hapus,permissions
+213,,lecturer-create,lecturer-create,Dosen - Buat,permissions
+214,,lecturer-read,lecturer-read,Dosen - Baca,permissions
+215,,lecturer-update,lecturer-update,Dosen - Ubah,permissions
+216,,lecturer-delete,lecturer-delete,Dosen - Hapus,permissions
+217,,access-right-create,access-right-create,Hak Akses - Buat,permissions
+218,,access-right-read,access-right-read,Hak Akses - Baca,permissions
+219,,access-right-update,access-right-update,Hak Akses - Ubah,permissions
+220,,access-right-delete,access-right-delete,Hak Akses - Hapus,permissions
 400,,administrator,Administrator,Administrator,permission_groups
 401,,lecturer,Dosen,Dosen,permission_groups
 402,,learner,Mahasiswa,Mahasiswa,permission_groups
