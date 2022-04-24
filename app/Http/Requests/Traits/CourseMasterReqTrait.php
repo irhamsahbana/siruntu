@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Traits;
 
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
 
 trait CourseMasterReqTrait
 {
