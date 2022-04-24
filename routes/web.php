@@ -8,6 +8,8 @@ use App\Http\Controllers\{
     CategoryController,
     CourseController,
     CourseMasterController,
+    LearnerController,
+    LecturerController,
     Select2Controller,
 };
 use App\Models\CourseMaster;
@@ -61,6 +63,18 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('/master-mata-kuliah/{id}', [CourseMasterController::class, 'update'])->name('course-master.update');
     Route::post('/master-mata-kuliah', [CourseMasterController::class, 'store'])->name('course-master.store');
     Route::get('/master-mata-kuliah', [CourseMasterController::class, 'index'])->name('course-master.index');
+
+    Route::get('/dosen/detail/{id}', [LecturerController::class, 'show'])->name('lecturer.show');
+    Route::delete('/dosen/{id}', [LecturerController::class, 'destroy'])->name('lecturer.destroy');
+    Route::patch('/dosen/{id}', [LecturerController::class, 'update'])->name('lecturer.update');
+    Route::post('/dosen', [LecturerController::class, 'store'])->name('lecturer.store');
+    Route::get('/dosen', [LecturerController::class, 'index'])->name('lecturer.index');
+
+    Route::get('/mahasiswa/detail/{id}', [LearnerController::class, 'show'])->name('learner.show');
+    Route::delete('/mahasiswa/{id}', [LearnerController::class, 'destroy'])->name('learner.destroy');
+    Route::patch('/mahasiswa/{id}', [LearnerController::class, 'update'])->name('learner.update');
+    Route::post('/mahasiswa', [LearnerController::class, 'store'])->name('learner.store');
+    Route::get('/mahasiswa', [LearnerController::class, 'index'])->name('learner.index');
 
     Route::get('select2/master-mata-kuliah/{id}', [Select2Controller::class, 'courseMaster'])->name('select2.course-master');
     Route::get('select2/master-mata-kuliah', [Select2Controller::class, 'courseMasters'])->name('select2.course-masters');

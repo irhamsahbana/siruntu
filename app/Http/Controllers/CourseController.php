@@ -11,7 +11,6 @@ use App\Http\Repositories\Finder\CourseFinder;
 use App\Http\Repositories\Course;
 
 use App\Models\Course as Model;
-use App\Models\CourseMaster;
 
 class CourseController extends Controller
 {
@@ -22,16 +21,7 @@ class CourseController extends Controller
 
         $data = $finder->get();
 
-        $courseMasters = CourseMaster::all();
-        if ($courseMasters->isNotEmpty())
-            $courseMasters = $courseMasters->map(function($item) {
-                return [
-                    'value' => $item->id,
-                    'text' => $item->ref_no
-                ];
-            });
-
-        return view('pages.CourseIndex', compact('data', 'courseMasters'));
+        return view('pages.CourseIndex', compact('data'));
     }
 
     public function store(CourseStoreReq $request)
@@ -74,17 +64,7 @@ class CourseController extends Controller
     {
         $data = $this->getModel($id);
 
-        $courseMasters = CourseMaster::all();
-        if ($courseMasters->isNotEmpty())
-            $courseMasters = $courseMasters->map(function($item) {
-                return [
-                    'value' => $item->id,
-                    'text' => $item->ref_no
-                ];
-            });
-
-
-        return view('pages.CourseDetail', compact('data', 'courseMasters'));
+        return view('pages.CourseDetail', compact('data'));
     }
 
     private function getModel($id)
@@ -92,7 +72,7 @@ class CourseController extends Controller
         $row = Model::find($id);
 
         if (empty($row))
-            abort(404, 'Kategori tidak ditemukan.');
+            abort(404, 'Master mata kuliah tidak ditemukan.');
 
         // insert $row to repository for checking access control
         $repo = new Course($row);

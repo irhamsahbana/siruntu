@@ -18,7 +18,7 @@ class CreatePeopleTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('ref_no');
             $table->string('name');
-            $table->string('email')->nullable();
+            $table->string('email')->unique()->nullable();
             $table->timestamps();
         });
     }
