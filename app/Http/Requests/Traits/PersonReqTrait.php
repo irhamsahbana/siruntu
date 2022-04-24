@@ -23,6 +23,6 @@ trait PersonReqTrait
 
     protected function getRulesEmail()
     {
-        return ['nullable', 'string', 'email', 'max:64'];
+        return ['nullable', 'string', 'email', 'max:64', Rule::unique('people', 'email')->ignore($this->id)];
     }
 }

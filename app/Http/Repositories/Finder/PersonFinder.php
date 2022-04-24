@@ -11,7 +11,7 @@ class PersonFinder extends AbstractFinder
 
     public function __construct()
     {
-        $this->query = Model::select('id', 'ref_no', 'name', 'email');
+        $this->query = Model::select('id', 'category_id', 'ref_no', 'name', 'email');
     }
 
     public function setCategory($category)
@@ -24,7 +24,7 @@ class PersonFinder extends AbstractFinder
         if(!empty($this->category)) {
             $category = Category::where('name', $this->category)->first();
 
-            $this->query->where('category_id', $category->id);
+            $this->query->where('people.category_id', $category->id);
         }
     }
 
@@ -47,6 +47,12 @@ class PersonFinder extends AbstractFinder
 
     public function doQuery()
     {
+        if ($this->category == 'lecturer') {
+            $this->filterByAccessControl('lecturer-read');
+        } else if ($this->category == 'learner') {
+            $this->filterByAccessControl('learner-read');
+        }
+
         $this->whereCategory();
         $this->whereKeyword();
     }
