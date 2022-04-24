@@ -36,8 +36,13 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-header">Master Data</li>
-          <x-nav-item :icon="'fas fa-users'" :text="'Dosen'" :href="'#'" />
-          <x-nav-item :icon="'fas fa-users'" :text="'Mahasiswa'" :href="'#'" />
+          @if(Auth::user()->hasAccess('lecturer-read'))
+            <x-nav-item :icon="'fas fa-users'" :text="'Dosen'" :href="route('lecturer.index')" />
+          @endif
+
+          @if(Auth::user()->hasAccess('learner-read'))
+            <x-nav-item :icon="'fas fa-users'" :text="'Mahasiswa'" :href="route('learner.index')" />
+          @endif
 
           @if(Auth::user()->hasAccess('course-master-read'))
             <x-nav-item :icon="'fab fa-leanpub'" :text="'Master Mata Kuliah'" :href="route('course-master.index')" />
