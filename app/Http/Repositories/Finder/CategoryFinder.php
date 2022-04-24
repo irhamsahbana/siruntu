@@ -27,7 +27,8 @@ class CategoryFinder extends AbstractFinder
             $this->query->where(function($query) use ($list) {
                 foreach($list as $x) {
                     $pattern = '%' . $x . '%';
-                    $query->orWhere('category.label', 'like', $pattern);
+                    $query->orWhere('categories.id', 'like', $pattern);
+                    $query->orWhere('categories.label', 'like', $pattern);
                 }
             });
         }
@@ -60,8 +61,8 @@ class CategoryFinder extends AbstractFinder
                 $this->filterByAccessControl(sprintf('category-%s-read', $group), sprintf('Tidak memiliki hak akses untuk melihat data %s', $group));
         }
 
-        $this->whereKeyword();
         $this->whereGroups();
+        $this->whereKeyword();
         $this->whereOrderBy();
     }
 }

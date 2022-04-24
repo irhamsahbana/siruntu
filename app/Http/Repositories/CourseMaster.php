@@ -42,6 +42,6 @@ class CourseMaster extends AbstractRepository
 
     protected function getPrefix()
     {
-        return 'course-master/';
+        return 'course/';
     }
 }

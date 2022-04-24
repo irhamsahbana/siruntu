@@ -6,8 +6,11 @@ use App\Http\Controllers\{
     AccessRightController,
     AuthController,
     CategoryController,
+    CourseController,
     CourseMasterController,
+    Select2Controller,
 };
+use App\Models\CourseMaster;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,9 +50,20 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('kategori', [CategoryController::class, 'index'])->name('category.index');
     Route::post('kategori', [CategoryController::class, 'store'])->name('category.store');
 
+    Route::get('/mata-kuliah/detail/{id}', [CourseController::class, 'show'])->name('course.show');
+    Route::delete('/mata-kuliah/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
+    Route::patch('/mata-kuliah/{id}', [CourseController::class, 'update'])->name('course.update');
+    Route::post('/mata-kuliah', [CourseController::class, 'store'])->name('course.store');
+    Route::get('/mata-kuliah', [CourseController::class, 'index'])->name('course.index');
+
     Route::get('/master-mata-kuliah/detail/{id}', [CourseMasterController::class, 'show'])->name('course-master.show');
     Route::delete('/master-mata-kuliah/{id}', [CourseMasterController::class, 'destroy'])->name('course-master.destroy');
     Route::patch('/master-mata-kuliah/{id}', [CourseMasterController::class, 'update'])->name('course-master.update');
     Route::post('/master-mata-kuliah', [CourseMasterController::class, 'store'])->name('course-master.store');
     Route::get('/master-mata-kuliah', [CourseMasterController::class, 'index'])->name('course-master.index');
+
+    Route::get('select2/master-mata-kuliah/{id}', [Select2Controller::class, 'courseMaster'])->name('select2.course-master');
+    Route::get('select2/master-mata-kuliah', [Select2Controller::class, 'courseMasters'])->name('select2.course-masters');
+    Route::get('select2/kategori/{id}', [Select2Controller::class, 'category'])->name('select2.category');
+    Route::get('select2/kategori', [Select2Controller::class, 'categories'])->name('select2.categories');
 });

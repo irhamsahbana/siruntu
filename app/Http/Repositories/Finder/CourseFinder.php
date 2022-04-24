@@ -2,13 +2,21 @@
 
 namespace App\Http\Repositories\Finder;
 
-use App\Models\CourseMaster as Model;
+use App\Models\Course as Model;
 
-class CourseMasterFinder extends AbstractFinder
+class CourseFinder extends AbstractFinder
 {
     public function __construct()
     {
-        $this->query = Model::select('id', 'ref_no', 'name');
+        $this->query = Model::select(
+                                'courses.id',
+                                'course_masters.ref_no',
+                                'course_masters.name',
+                                'semesters.label as semester_label',
+                            );
+
+        $this->query->join('course_masters', 'course_masters.id', '=', 'courses.course_master_id');
+        $this->query->join('categories AS semesters', 'semesters.id', '=', 'courses.semester_id');
     }
 
     public function whereKeyword()
@@ -20,7 +28,6 @@ class CourseMasterFinder extends AbstractFinder
             $this->query->where(function($query) use ($list) {
                 foreach($list as $x) {
                     $pattern = '%' . $x . '%';
-                    $query->orwhere('course_masters.id', 'like', $pattern);
                     $query->orWhere('course_masters.ref_no', 'like', $pattern);
                     $query->orWhere('course_masters.name', 'like', $pattern);
                 }
