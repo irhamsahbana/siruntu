@@ -34,6 +34,18 @@ class CourseMaster extends AbstractRepository
         $this->generateData();
     }
 
+    protected function afterSave()
+    {
+        $courses = $this->model->courses()->get();
+
+        if ($courses != null && $courses->isNotEmpty())
+            foreach($courses as $course) {
+                $course->ref_no = $this->model->ref_no;
+                $course->name = $this->model->name;
+                $course->save();
+            }
+    }
+
     private function generateData()
     {
         if (empty($this->model->ref_no))

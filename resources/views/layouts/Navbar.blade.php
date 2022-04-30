@@ -17,7 +17,10 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Mata Kuliah Terdaftar</a>
+            <a href="#" class="nav-link">Daftar Kelas</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Kelasku</a>
           </li>
         </ul>
 

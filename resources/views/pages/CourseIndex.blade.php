@@ -31,6 +31,10 @@
                                     <td>
                                         @if($hasAccessRead)
                                             <a
+                                                href="{{ route('classroom.index', ['course_id' => $row->id]) }}"
+                                                class="btn btn-primary"
+                                                title="Ruang Kelas"><i class="fas fa-chalkboard"></i></a>
+                                            <a
                                                 href="{{ route('course.show', $row->id) }}"
                                                 class="btn btn-warning"
                                                 title="Ubah"><i class="fas fa-pencil-alt"></i></a>
@@ -143,7 +147,7 @@
                     delay: 500,
                     data: function (params) {
                         let query = {
-                            category: 'semester',
+                            category: 'semesters',
                             keyword: params.term
                         }
 

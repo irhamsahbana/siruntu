@@ -14,6 +14,7 @@ class InSelect extends Component
     public $id;
     public $placeholder;
     public $required;
+    public $multiple;
     public $disabled;
     public $readonly;
 
@@ -31,6 +32,7 @@ class InSelect extends Component
         $id = null,
         $placeholder = null,
         $required = null,
+        $multiple = null,
         $disabled = null,
         $readonly = null
     ) {
@@ -42,6 +44,7 @@ class InSelect extends Component
         $this->id = $id;
         $this->placeholder = $placeholder;
         $this->required = $required;
+        $this->multiple = $multiple;
         $this->disabled = $disabled;
         $this->readonly = $readonly;
     }

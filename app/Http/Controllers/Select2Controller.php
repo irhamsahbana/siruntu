@@ -4,14 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Repositories\Finder\CourseMasterFinder;
 use App\Http\Repositories\Finder\CategoryFinder;
+use App\Http\Repositories\Finder\CourseFinder;
+use App\Http\Repositories\Finder\CourseMasterFinder;
+use App\Http\Repositories\Finder\PersonFinder;
 
-use App\Http\Repositories\CourseMaster;
 use App\Http\Repositories\Category;
+use App\Http\Repositories\Course;
+use App\Http\Repositories\CourseMaster;
+use App\Http\Repositories\Learner;
 
+use App\Models\Course as CourseModel;
 use App\Models\CourseMaster as CourseMasterModel;
 use App\Models\Category as CategoryModel;
+use App\Models\Person as PersonModel;
 
 class Select2Controller extends Controller
 {
@@ -27,6 +33,13 @@ class Select2Controller extends Controller
             $finder->setKeyword($request->keyword);
 
         $data = $finder->get();
+
+        return response()->json($data);
+    }
+
+    public function category($id)
+    {
+        $data = $this->getModel($id, CategoryModel::class, Category::class);
 
         return response()->json($data);
     }
@@ -51,14 +64,55 @@ class Select2Controller extends Controller
         return response()->json($data);
     }
 
-    public function category($id)
+    public function courses(Request $request)
     {
-        $data = $this->getModel($id, CategoryModel::class, Category::class);
+        $finder = new CourseFinder();
+        $finder->setAccessControl($this->getAccessControl());
+
+        if ($request->keyword)
+            $finder->setKeyword($request->keyword);
+
+        $data = $finder->get();
 
         return response()->json($data);
     }
 
-    private function getModel($id, $model, $repository)
+    public function course($id)
+    {
+        $data = $this->getModel($id, CourseModel::class, Course::class);
+
+        return response()->json($data);
+    }
+
+    public function learners(Request $request)
+    {
+        $finder = new PersonFinder();
+        $finder->setAccessControl($this->getAccessControl());
+        $finder->setCategory('learner');
+
+        if ($request->keyword)
+            $finder->setKeyword($request->keyword);
+
+        $data = $finder->get();
+
+        return response()->json($data);
+    }
+
+    public function lecturers(Request $request)
+    {
+        $finder = new PersonFinder();
+        $finder->setAccessControl($this->getAccessControl());
+        $finder->setCategory('lecturer');
+
+        if ($request->keyword)
+            $finder->setKeyword($request->keyword);
+
+        $data = $finder->get();
+
+        return response()->json($data);
+    }
+
+    private function getModel(int $id, string $model, string $repository)
     {
         $row = $model::find($id);
 

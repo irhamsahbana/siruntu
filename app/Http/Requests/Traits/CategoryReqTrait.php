@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 trait CategoryReqTrait
 {
-    protected static $allowed = ['semester'];
+    protected static $allowed = ['semesters'];
 
     /**
      * Prepare the data for validation.
