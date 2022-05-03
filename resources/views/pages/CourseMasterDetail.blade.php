@@ -18,24 +18,19 @@
 
                         <x-row>
                             <x-in-text
-                                :label="'NIP'"
-                                :placeholder="'Masukkan NIP'"
-                                :col="4"
+                                :label="'Kode'"
+                                :placeholder="'Masukkan Kode'"
+                                :col="6"
                                 :name="'ref_no'"
-                                :required="false"></x-in-text>
+                                :value="$data->ref_no"
+                                :required="true"></x-in-text>
                             <x-in-text
                                 :label="'Nama'"
                                 :placeholder="'Masukkan Nama'"
-                                :col="4"
+                                :col="6"
                                 :name="'name'"
+                                :value="$data->name"
                                 :required="true"></x-in-text>
-                            <x-in-text
-                                :type="'email'"
-                                :label="'Email'"
-                                :placeholder="'Masukkan Email'"
-                                :col="4"
-                                :name="'email'"
-                                :required="false"></x-in-text>
                         </x-row>
 
                         <x-col class="text-right">

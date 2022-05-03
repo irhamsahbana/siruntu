@@ -72,15 +72,13 @@
                     :placeholder="'Masukkan Kode'"
                     :col="6"
                     :name="'ref_no'"
-                    :required="false">
-                </x-in-text>
+                    :required="true"></x-in-text>
                 <x-in-text
                     :label="'Nama'"
                     :placeholder="'Masukkan Nama'"
                     :col="6"
                     :name="'name'"
-                    :required="true">
-                </x-in-text>
+                    :required="true"></x-in-text>
             </x-row>
 
             <x-col class="text-right">

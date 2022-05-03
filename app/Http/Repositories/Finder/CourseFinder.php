@@ -10,12 +10,13 @@ class CourseFinder extends AbstractFinder
     {
         $this->query = Model::select(
                                 'courses.id',
-                                'course_masters.ref_no',
-                                'course_masters.name',
+                                'courses.course_master_id',
+                                'courses.semester_id',
+                                'courses.ref_no',
+                                'courses.name',
                                 'semesters.label as semester_label',
                             );
 
-        $this->query->join('course_masters', 'course_masters.id', '=', 'courses.course_master_id');
         $this->query->join('categories AS semesters', 'semesters.id', '=', 'courses.semester_id');
     }
 
@@ -28,8 +29,8 @@ class CourseFinder extends AbstractFinder
             $this->query->where(function($query) use ($list) {
                 foreach($list as $x) {
                     $pattern = '%' . $x . '%';
-                    $query->orWhere('course_masters.ref_no', 'like', $pattern);
-                    $query->orWhere('course_masters.name', 'like', $pattern);
+                    $query->orWhere('courses.ref_no', 'like', $pattern);
+                    $query->orWhere('courses.name', 'like', $pattern);
                 }
             });
         }

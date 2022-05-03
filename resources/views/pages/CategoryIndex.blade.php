@@ -8,7 +8,7 @@
     $hasAccessDelete = false;
 
     $categories = [
-        ['group_by' => 'semester', 'label' => 'Semester', 'icon' => 'fas fa-newspaper'],
+        ['group_by' => 'semesters', 'label' => 'Semester', 'icon' => 'fas fa-newspaper'],
     ];
 
     foreach ($categories as $category) {

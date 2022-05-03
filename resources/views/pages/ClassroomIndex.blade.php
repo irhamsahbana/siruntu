@@ -1,10 +1,10 @@
 @extends('App')
 
 @php
-    $hasAccessCreate = Auth::user()->hasAccess('course-create');
-    $hasAccessRead = Auth::user()->hasAccess('course-read');
-    // $hasAccessUpdate = Auth::user()->hasAccess('course-update');
-    $hasAccessDelete = Auth::user()->hasAccess('course-delete');
+    $hasAccessCreate = Auth::user()->hasAccess('classroom-create');
+    $hasAccessRead = Auth::user()->hasAccess('classroom-read');
+    // $hasAccessUpdate = Auth::user()->hasAccess('classroom-update');
+    $hasAccessDelete = Auth::user()->hasAccess('classroom-delete');
 @endphp
 
 @section('content-header', 'Mata Kuliah')
@@ -21,27 +21,22 @@
                     </x-col>
 
                     <x-col>
-                        <x-table :thead="['Kode', 'Nama', 'Semester', 'Aksi']">
+                        <x-table :thead="['Mata Kuliah', 'Nama', 'Aksi']">
                             @foreach($data as $row)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $row->ref_no }}</td>
+                                    <td>{{ sprintf('%s - %s', $row->course_ref_no, $row->course_name) }}</td>
                                     <td>{{ $row->name }}</td>
-                                    <td>{{ $row->semester_label }}</td>
                                     <td>
                                         @if($hasAccessRead)
                                             <a
-                                                href="{{ route('classroom.index', ['course_id' => $row->id]) }}"
-                                                class="btn btn-primary"
-                                                title="Ruang Kelas"><i class="fas fa-chalkboard"></i></a>
-                                            <a
-                                                href="{{ route('course.show', $row->id) }}"
+                                                href="{{ route('classroom.show', $row->id) }}"
                                                 class="btn btn-warning"
                                                 title="Ubah"><i class="fas fa-pencil-alt"></i></a>
                                         @endif
 
                                         @if($hasAccessDelete)
-                                            <form style=" display:inline!important;" method="POST" action="{{ route('course.destroy', $row->id) }}">
+                                            <form style=" display:inline!important;" method="POST" action="{{ route('classroom.destroy', $row->id) }}">
                                                 @csrf
                                                 @method('DELETE')
 
@@ -67,23 +62,23 @@
     </x-content>
 
     <x-modal :title="'Tambah Data'" :id="'add-modal'" :size="'xl'">
-        <form style="width: 100%" action="{{ route('course.store') }}" method="POST">
+        <form style="width: 100%" action="{{ route('classroom.store') }}" method="POST">
             @csrf
             @method('POST')
 
             <x-row>
                 <x-in-select
-                    :label="'Master Mata Kuliah'"
+                    :label="'Mata Kuliah'"
                     :placeholder="'Pilih Master Mata Kuliah'"
                     :col="6"
-                    :name="'course_master_id'"
+                    :name="'course_id'"
                     :required="true"></x-in-select>
-                <x-in-select
-                    :label="'Semester'"
-                    :placeholder="'Pilih Semester'"
+                <x-in-text
+                    :label="'Nama'"
+                    :placeholder="'Masukkan Nama'"
                     :col="6"
-                    :name="'semester_id'"
-                    :required="true"></x-in-select>
+                    :name="'name'"
+                    :required="true"></x-in-text>
             </x-row>
 
             <x-col class="text-right">
@@ -95,20 +90,19 @@
 @endsection
 
 @push('js')
-    <input type="hidden" id="url-course-masters" value="{{ route('select2.course-masters') }}">
-    <input type="hidden" id="url-categories" value="{{ route('select2.categories') }}">
+    <input type="hidden" id="url-courses" value="{{ route('select2.courses') }}">
 
     <script>
         $(function() {
-            $('#course_master_id').select2({
+            $('#course_id').select2({
                 theme: 'bootstrap4',
                 allowClear: true,
                 placeholder: {
                     id: '',
-                    text: 'Pilih Master Mata Kuliah'
+                    text: 'Pilih Mata Kuliah'
                 },
                 ajax: {
-                    url: $('#url-course-masters').val(),
+                    url: $('#url-courses').val(),
                     dataType: 'json',
                     delay: 500,
                     data: function (params) {
@@ -123,41 +117,6 @@
                             return {
                                 id: obj.id,
                                 text: [obj.ref_no, obj.name].join(' - ')
-                            };
-                        });
-
-                        return {
-                            results: data
-                        };
-                    },
-                    cache: false
-                }
-            });
-
-            $('#semester_id').select2({
-                theme: 'bootstrap4',
-                allowClear: true,
-                placeholder: {
-                    id: '',
-                    text: 'Pilih Semester'
-                },
-                ajax: {
-                    url: $('#url-categories').val(),
-                    dataType: 'json',
-                    delay: 500,
-                    data: function (params) {
-                        let query = {
-                            category: 'semesters',
-                            keyword: params.term
-                        }
-
-                        return query;
-                    },
-                    processResults: function (data) {
-                        data = $.map(data.data, function (obj) {
-                            return {
-                                id: obj.id,
-                                text: obj.label
                             };
                         });
 

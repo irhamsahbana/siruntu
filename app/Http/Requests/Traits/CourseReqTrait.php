@@ -25,7 +25,7 @@ trait CourseReqTrait
             'integer',
             Rule::exists('categories', 'id')
                 ->where(function ($query) {
-                    $query->where('group_by', 'semester');
+                    $query->where('group_by', 'semesters');
                 }),
         ];
     }

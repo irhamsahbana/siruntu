@@ -12,6 +12,7 @@
     'options' => [],
     'value' => null,
     'required' => false,
+    'multiple' => false,
     'disabled' => false,
     'readonly' => false,
 ])
@@ -38,6 +39,7 @@
             id="{{ $id }}"
             name="{{ $name }}"
             @if ($required) required @endif
+            @if ($multiple) multiple @endif
             @if ($readonly) readonly @endif
             @if ($disabled) disabled @endif>
 

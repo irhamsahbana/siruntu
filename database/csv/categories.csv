@@ -2,14 +2,10 @@ ID,CATEGORY_ID,NAME,LABEL,NOTES,GROUP_BY
 1,,administrator,Administrator,Administrator,people
 2,,learner,Mahasiswa,Mahasiswa,people
 3,,lecturer,Dosen,Dosen,people
-11,,category-semester-create,category-semester-create,Kategori Semester - Buat,permissions
-12,,category-semester-read,category-semester-read,Kategori Semester - Baca,permissions
-13,,category-semester-update,category-semester-update,Kategori Semester - Ubah,permissions
-14,,category-semester-delete,category-semester-delete,Kategori Semester - Hapus,permissions
-15,,category-class-create,category-class-create,Kategori Kelas - Buat,permissions
-16,,category-class-read,category-class-read,Kategori Kelas - Baca,permissions
-17,,category-class-update,category-class-update,Kategori Kelas - Ubah,permissions
-18,,category-class-delete,category-class-delete,Kategori Kelas - Hapus,permissions
+11,,category-semesters-create,category-semester-create,Kategori Semester - Buat,permissions
+12,,category-semesters-read,category-semester-read,Kategori Semester - Baca,permissions
+13,,category-semesters-update,category-semester-update,Kategori Semester - Ubah,permissions
+14,,category-semesters-delete,category-semester-delete,Kategori Semester - Hapus,permissions
 201,,course-master-create,course-master-create,Master Mata Kuliah - Buat,permissions
 202,,course-master-read,course-master-read,Master Mata Kuliah - Baca,permissions
 203,,course-master-update,course-master-update,Master Mata Kuliah - Ubah,permissions
@@ -30,10 +26,13 @@ ID,CATEGORY_ID,NAME,LABEL,NOTES,GROUP_BY
 218,,access-right-read,access-right-read,Hak Akses - Baca,permissions
 219,,access-right-update,access-right-update,Hak Akses - Ubah,permissions
 220,,access-right-delete,access-right-delete,Hak Akses - Hapus,permissions
+221,,classroom-create,classroom-create,Kelas - Buat,permissions
+222,,classroom-read,classroom-read,Kelas - Baca,permissions
+223,,classroom-update,classroom-update,Kelas - Ubah,permissions
+224,,classroom-delete,classroom-delete,Kelas - Hapus,permissions
 400,,administrator,Administrator,Administrator,permission_groups
 401,,lecturer,Dosen,Dosen,permission_groups
 402,,learner,Mahasiswa,Mahasiswa,permission_groups
+501,,normal,Normal,Mode Kelas - Normal,classroom_modes
+502,,whiteboard,Whiteboard,Mode Kelas - Whiteboard,classroom_modes
 3000,,__delimiter__1,__delimiter__,__delimiter__,__delimiter__1
-3001,,20212022-awal,2021/2022 Awal,2021/2022 Awal,semester
-3002,,20212022-akhir,2021/2022 Akhir,2021/2022 Akhir,semester
-4000,,__delimiter__2,__delimiter__,__delimiter__,__delimiter__2

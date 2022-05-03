@@ -52,6 +52,10 @@
             <x-nav-item :icon="'fab fa-leanpub'" :text="'Mata Kuliah'" :href="route('course.index')" />
           @endif
 
+          @if(Auth::user()->hasAccess('classroom-read'))
+            <x-nav-item :icon="'fas fa-book-open'" :text="'Ruang Kelas'" :href="route('classroom.index')" />
+          @endif
+
           <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
 
           @if(Auth::user()->hasAccess('access-right-read'))
