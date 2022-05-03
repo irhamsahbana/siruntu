@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('mahasiswa', [LearnerController::class, 'store'])->name('learner.store');
     Route::get('mahasiswa', [LearnerController::class, 'index'])->name('learner.index');
 
+    Route::delete('ruang-kelas/hapus-peserta/{id}', [ClassroomController::class, 'removeParticipants'])->name('classroom.remove-participants');
     Route::get('ruang-kelas/detail/{id}', [ClassroomController::class, 'show'])->name('classroom.show');
     Route::delete('ruang-kelas/{id}', [ClassroomController::class, 'destroy'])->name('classroom.destroy');
     Route::patch('ruang-kelas/{id}', [ClassroomController::class, 'update'])->name('classroom.update');

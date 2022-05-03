@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\ClassroomStoreReq;
 use App\Http\Requests\ClassroomUpdateReq;
 
 use App\Http\Repositories\Finder\ClassroomFinder;
 use App\Http\Repositories\Classroom;
+
+use App\Services\Classroom as Service;
 
 use App\Models\Classroom as Model;
 
@@ -50,6 +53,10 @@ class ClassroomController extends Controller
 
         $repo = new Classroom($row);
         $repo->setAccessControl($this->getAccessControl());
+
+        if ($request->add_participants)
+            $repo->addParticipants($request->add_participants);
+
         $repo->save();
 
         return redirect()->back()->with('message', 'Ruang kelas berhasil disimpan.');
@@ -65,11 +72,23 @@ class ClassroomController extends Controller
         return redirect()->back()->with('message', 'Ruang kelas berhasil dihapus.');
     }
 
-    public function show($id)
+    public function show($id, Service $service)
     {
         $data = $this->getModel($id);
+        $participants = $service->getClassroomParticipants($id);
 
-        return view('pages.ClassroomDetail', compact('data'));
+        return view('pages.ClassroomDetail', compact('data', 'participants'));
+    }
+
+    public function removeParticipants(Request $request, $id)
+    {
+        $row = $this->getModel($id);
+
+        $repo = new Classroom($row);
+        $repo->setAccessControl($this->getAccessControl());
+        $repo->removeParticipants($request->delete_participants);
+
+        return redirect()->back()->with('message', 'Peserta Kelas berhasil dihapus.');
     }
 
     private function getModel($id)

@@ -7,6 +7,8 @@ use App\Models\Category;
 
 class Classroom extends AbstractRepository
 {
+    private $participants = [];
+
     public function __construct(Model $model)
     {
         parent::__construct($model);
@@ -36,5 +38,42 @@ class Classroom extends AbstractRepository
             $this->model->mode_id = Category::where('group_by', 'classroom_modes')
                                             ->where('name', 'normal'
                                             )->first()->id;
+    }
+
+    protected function afterSave()
+    {
+        $this->syncWithAdditionalParticipants();
+    }
+
+    protected function beforeDelete()
+    {
+        // detach all participants from classroom
+        $this->model->participants()->detach();
+    }
+
+    public function addParticipants(array $participants)
+    {
+        $this->participants = $participants;
+    }
+
+    private function syncWithAdditionalParticipants()
+    {
+        if (!empty($this->participants)) {
+            $participants = collect($this->participants);
+
+            $participants = $participants->mapWithKeys(function ($participant) {
+                return [
+                    $participant => ['course_id' => $this->model->course_id],
+                ];
+            })->toArray();
+
+            $this->model->participants()->syncWithoutDetaching($participants);
+        }
+    }
+
+    public function removeParticipants(?array $participants)
+    {
+        $this->filterByAccessControl('classroom-delete');
+        $this->model->participants()->detach($participants);
     }
 }
