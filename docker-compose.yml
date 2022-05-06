@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  siruntu_app:
+    build:
+      args:
+        user: siruntu
+        uid: 1000
+      context: ./
+      dockerfile: siruntu-app.dockerfile
+    image: irhamsahbana/siruntu-app:1.0.0
+    container_name: siruntu-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - siruntu
+
+  siruntu_nginx:
+    image: nginx:1.21.6-alpine
+    container_name: siruntu-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - siruntu
+
+  siruntu_kurento:
+    image: kurento/kurento-media-server:6.16.0
+    container_name: siruntu-kurento
+    restart: unless-stopped
+    ports:
+      - 8888:8888
+    volumes:
+      - ./:/var/www
+    networks:
+      - siruntu
+
+networks:
+  siruntu:
+    driver: bridge

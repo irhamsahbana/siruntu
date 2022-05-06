@@ -1,0 +1,20 @@
+jalankan command berikut:
+1. "docker-compose build siruntu_app"
+2. "docker-compose up -d"
+3. "docker-compose ps" #melihat informasi status service yang aktif
+4. "docker-compose exec siruntu_app ls -l" # melihat informasi folder dari laravel pada container siruntu-app
+5. "docker-compose exec siruntu_app composer install" # menginstall dependency (jika sudah ada tidak perlu dilakukan)
+6. "docker-compose exec siruntu_app php artisan key:generate" # generate key laravel
+
+
+untuk command tambahan:
+- "docker-compose logs siruntu_nginx" # melihat log dari service nginx
+- "docker-compose pause" # menghentikan sementara service2 yang berjalan
+- "docker-compose unpause" # menjalankan kembali service2 yang berhenti sementara
+- "docker-compose down" # [!peringatan] menghapus semua container, network, dan volume pada compose ini
+
+mengubah settingan database (jika tidak menggunakan service database pada docker compose)
+1. "docker exec -it siruntu-app bash" # masuk ke dalam container untuk melihat/mengubah file
+2. "nano .env"
+3. ubah DB_HOST menjadi "host.docker.internal" # khusus windows dan mac, untuk linux bisa dlihat pada thread berikut:
+    https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach
