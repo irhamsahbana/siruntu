@@ -16,6 +16,12 @@ services:
       - ./:/var/www
     networks:
       - siruntu
+    depends_on:
+      - siruntu_db
+    links:
+      - siruntu_db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"    
 
   siruntu_nginx:
     image: nginx:1.21.6-alpine
@@ -28,6 +34,20 @@ services:
       - ./docker/nginx:/etc/nginx/conf.d
     networks:
       - siruntu
+  
+  siruntu_db:
+    container_name: siruntu-db
+    image: mariadb:10.3
+    restart: always
+    networks:
+      - siruntu
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./etc/my.cnf.d:/etc/mysql/conf.d
+    env_file:
+     - .env
 
   siruntu_kurento:
     image: kurento/kurento-media-server:6.16.0
@@ -41,5 +61,6 @@ services:
       - siruntu
 
 networks:
-  siruntu:
-    driver: bridge
+  siruntu: {}
+  #siruntu:
+  #  driver: bridge

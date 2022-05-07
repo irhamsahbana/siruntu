@@ -1,0 +1,9 @@
+[mysqld]
+connect_timeout = 1000000
+net_write_timeout = 1000000
+wait_timeout = 1000000
+max_allowed_packet = 1024M
+interactive_timeout = 1000000
+net_buffer_length = 200M
+net_read_timeout = 1000000
+#set GLOBAL delayed_insert_timeout=100000
