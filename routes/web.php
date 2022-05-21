@@ -84,6 +84,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('ruang-kelas', [ClassroomController::class, 'store'])->name('classroom.store');
     Route::get('ruang-kelas', [ClassroomController::class, 'index'])->name('classroom.index');
 
+    Route::get('ruang-kelasku', [ClassroomController::class, 'myClassroom'])->name('classroom.my-classroom');
+    Route::get('ruang-kelas/kelas-langsung/{classroom_id}', [ClassroomController::class, 'classroomLiveCourse'])->name('classroom.live-course');
+
     Route::group(['prefix' => 'select2'], function() {
         Route::get('master-mata-kuliah/{id}', [Select2Controller::class, 'courseMaster'])->name('select2.course-master');
         Route::get('master-mata-kuliah', [Select2Controller::class, 'courseMasters'])->name('select2.course-masters');

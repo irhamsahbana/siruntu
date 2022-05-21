@@ -1,3 +1,7 @@
+@php
+ $userPermissions = Auth::user()->getUserPermissions();
+@endphp
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from

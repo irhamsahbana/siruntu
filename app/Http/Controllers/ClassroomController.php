@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\ClassroomStoreReq;
 use App\Http\Requests\ClassroomUpdateReq;
@@ -28,6 +29,32 @@ class ClassroomController extends Controller
         $data = $finder->get();
 
         return view('pages.ClassroomIndex', compact('data'));
+    }
+
+    public function myClassroom()
+    {
+        $groups = Auth::user()->getUserPermissionGroups()->pluck('name');
+
+        if ($groups->contains('lecturer') || $groups->contains('learner'))
+            $data = Classroom::myClassrom(Auth::user()->person_id);
+        else
+            return redirect()->back()->withErrors('Anda tidak teridentifikasi sebagai dosen atau mahasiswa.');
+
+        return view('pages.ClassroomFollowedList', compact('data'));
+    }
+
+    public function classroomLiveCourse($classroom_id)
+    {
+        $groups = Auth::user()->getUserPermissionGroups()->pluck('name');
+        $registered = DB::table('classroom_participants')
+                        ->where('classroom_id', $classroom_id)
+                        ->where('person_id', Auth::user()->person_id)
+                        ->exists();
+
+        if (($groups->contains('lecturer') || $groups->contains('learner')) && $registered)
+            return view('pages.LiveCourseIndex');
+        else
+            return redirect()->back()->withErrors('Anda tidak terdaftar pada kelas.');
     }
 
     public function store(ClassroomStoreReq $request)

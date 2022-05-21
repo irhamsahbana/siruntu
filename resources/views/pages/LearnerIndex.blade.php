@@ -1,10 +1,12 @@
 @extends('App')
 
 @php
-    $hasAccessCreate = Auth::user()->hasAccess('learner-create');
-    $hasAccessRead = Auth::user()->hasAccess('learner-read');
-    // $hasAccessUpdate = Auth::user()->hasAccess('learner-update');
-    $hasAccessDelete = Auth::user()->hasAccess('learner-delete');
+    $userPermissions = Auth::user()->getUserPermissions();
+
+    $hasAccessCreate = $userPermissions->contains('name', 'learner-create');
+    $hasAccessRead = $userPermissions->contains('name', 'learner-read');
+    // $hasAccessUpdate = $userPermissions->contains('name', 'learner-update');
+    $hasAccessDelete = $userPermissions->contains('name', 'learner-delete');
 @endphp
 
 @section('content-header', 'Mahasiswa')

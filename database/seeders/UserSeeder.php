@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $csvFilePath = storage::disk('database')->path('csv/categories.csv');
+        $csvFilePath = Storage::disk('database')->path('csv/categories.csv');
 
         $csv = new \ParseCsv\Csv();
         $csv->auto($csvFilePath);

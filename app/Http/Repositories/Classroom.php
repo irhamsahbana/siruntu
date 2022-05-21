@@ -2,6 +2,8 @@
 
 namespace App\Http\Repositories;
 
+use Illuminate\Support\Facades\DB;
+
 use App\Models\Classroom as Model;
 use App\Models\Category;
 
@@ -75,5 +77,15 @@ class Classroom extends AbstractRepository
     {
         $this->filterByAccessControl('classroom-delete');
         $this->model->participants()->detach($participants);
+    }
+
+    public static function myClassrom($personId)
+    {
+        return DB::table('classroom_participants')
+                    ->join('classrooms', 'classrooms.id', 'classroom_participants.classroom_id')
+                    ->join('courses', 'courses.id', 'classrooms.course_id')
+                    ->where('person_id', $personId)
+                    ->select('classrooms.*', 'courses.ref_no as course_ref_no', 'courses.name as course_name')
+                    ->paginate(9);
     }
 }
