@@ -21,6 +21,11 @@ class Classroom extends Model
 
     public function participants()
     {
-        return $this->belongsToMany(person::class, 'classroom_participants', 'classroom_id', 'person_id');
+        return $this->belongsToMany(
+            person::class,
+            'classroom_participants',
+            'classroom_id',
+            'person_id'
+        );
     }
 }

@@ -25,6 +25,8 @@ class AlterClassroomParticipantsTable extends Migration
             $table->index('person_id');
             $table->foreign('person_id')
             ->references('id')->on('people');
+
+            $table->unique(['classroom_id', 'person_id']);
         });
     }
 
@@ -36,6 +38,8 @@ class AlterClassroomParticipantsTable extends Migration
     public function down()
     {
         Schema::table('classroom_participants', function (Blueprint $table) {
+            $table->dropUnique(['classroom_id', 'person_id']);
+
             $table->dropForeign(['course_id']);
             $table->dropIndex(['course_id']);
 

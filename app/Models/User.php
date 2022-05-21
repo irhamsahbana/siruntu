@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 
 use App\Libs\HasAccessControl;
 use App\Libs\AccessControl;
@@ -57,6 +58,22 @@ class User extends Authenticatable
         $accessControl = $this->getUserAccessControl();
 
         return $accessControl->hasAccess($access);
+    }
+
+    public function getUserPermissions() : Collection
+    {
+        $this->setAccessControl($this->getAccessControl());
+        $accessControl = $this->getUserAccessControl();
+
+        return $accessControl->getPermissions();
+    }
+
+    public function getUserPermissionGroups() : Collection
+    {
+        $this->setAccessControl($this->getAccessControl());
+        $accessControl = $this->getUserAccessControl();
+
+        return $accessControl->getPermissionGroups();
     }
 
     private function getAccessControl()

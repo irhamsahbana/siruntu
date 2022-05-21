@@ -20,7 +20,7 @@
             <a href="#" class="nav-link">Daftar Kelas</a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">Kelasku</a>
+            <a href="{{ route('classroom.my-classroom') }}" class="nav-link">Kelasku</a>
           </li>
         </ul>
 

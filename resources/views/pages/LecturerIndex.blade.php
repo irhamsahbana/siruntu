@@ -1,10 +1,12 @@
 @extends('App')
 
 @php
-    $hasAccessCreate = Auth::user()->hasAccess('lecturer-create');
-    $hasAccessRead = Auth::user()->hasAccess('lecturer-read');
-    // $hasAccessUpdate = Auth::user()->hasAccess('lecturer-update');
-    $hasAccessDelete = Auth::user()->hasAccess('lecturer-delete');
+    $userPermissions = Auth::user()->getUserPermissions();
+
+    $hasAccessCreate = $userPermissions->contains('name', 'lecturer-create');
+    $hasAccessRead = $userPermissions->contains('name', 'lecturer-read');
+    // $hasAccessUpdate = $userPermissions->contains('name', 'lecturer-update');
+    $hasAccessDelete = $userPermissions->contains('name', 'lecturer-delete');
 @endphp
 
 @section('content-header', 'Dosen')

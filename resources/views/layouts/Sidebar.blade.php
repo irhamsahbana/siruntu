@@ -1,4 +1,4 @@
-  <!-- Main Sidebar Container -->
+<!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
@@ -36,29 +36,29 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-header">Master Data</li>
-          @if(Auth::user()->hasAccess('lecturer-read'))
+          @if($userPermissions->contains('name', 'lecturer-read'))
             <x-nav-item :icon="'fas fa-users'" :text="'Dosen'" :href="route('lecturer.index')" />
           @endif
 
-          @if(Auth::user()->hasAccess('learner-read'))
+          @if($userPermissions->contains('name', 'learner-read'))
             <x-nav-item :icon="'fas fa-users'" :text="'Mahasiswa'" :href="route('learner.index')" />
           @endif
 
-          @if(Auth::user()->hasAccess('course-master-read'))
+          @if($userPermissions->contains('name', 'course-master-read'))
             <x-nav-item :icon="'fab fa-leanpub'" :text="'Master Mata Kuliah'" :href="route('course-master.index')" />
           @endif
 
-          @if(Auth::user()->hasAccess('course-read'))
+          @if($userPermissions->contains('name', 'course-read'))
             <x-nav-item :icon="'fab fa-leanpub'" :text="'Mata Kuliah'" :href="route('course.index')" />
           @endif
 
-          @if(Auth::user()->hasAccess('classroom-read'))
+          @if($userPermissions->contains('name', 'classroom-read'))
             <x-nav-item :icon="'fas fa-book-open'" :text="'Ruang Kelas'" :href="route('classroom.index')" />
           @endif
 
           <x-nav-item :icon="'fas fa-list'" :text="'Daftar Kategori'" :href="route('category.list')" />
 
-          @if(Auth::user()->hasAccess('access-right-read'))
+          @if($userPermissions->contains('name', 'access-right-read'))
             <x-nav-item :icon="'fas fa-list'" :text="'Hak Akses'" :href="route('access-right.index')" />
           @endif
         </ul>
