@@ -21,7 +21,7 @@ services:
     links:
       - siruntu_db
     extra_hosts:
-      - "host.docker.internal:host-gateway"    
+      - "host.docker.internal:host-gateway"
 
   siruntu_nginx:
     image: nginx:1.21.6-alpine
@@ -34,7 +34,7 @@ services:
       - ./docker/nginx:/etc/nginx/conf.d
     networks:
       - siruntu
-  
+
   siruntu_db:
     container_name: siruntu-db
     image: mariadb:10.3
@@ -57,10 +57,23 @@ services:
       - 8888:8888
     volumes:
       - ./:/var/www
+      - ./temp:/tmp
     networks:
-      - siruntu
+      - host
+
+  siruntu_coturn:
+    image: instrumentisto/coturn:4
+    container_name: siruntu-coturn
+    volumes:
+      - ./etc/coturn.d/coturn.conf:/etc/coturn/turnserver.conf
+    networks:
+      - coturn
+    env_file:
+     - .env
 
 networks:
   siruntu: {}
+  coturn:
+    driver: host
   #siruntu:
   #  driver: bridge
