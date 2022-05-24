@@ -58,22 +58,16 @@ services:
     volumes:
       - ./:/var/www
       - ./temp:/tmp
-    networks:
-      - host
+    network_mode: "host"
 
   siruntu_coturn:
     image: instrumentisto/coturn:4
     container_name: siruntu-coturn
     volumes:
       - ./etc/coturn.d/coturn.conf:/etc/coturn/turnserver.conf
-    networks:
-      - coturn
+    network_mode: "host"
     env_file:
      - .env
 
 networks:
   siruntu: {}
-  coturn:
-    driver: host
-  #siruntu:
-  #  driver: bridge

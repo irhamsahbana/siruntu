@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     nano \
-    vim \
+    nvim \
     net-tools
 
 # Clear cache
