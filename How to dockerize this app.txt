@@ -6,15 +6,39 @@ jalankan command berikut:
 5. "docker-compose exec siruntu_app composer install" # menginstall dependency (jika sudah ada tidak perlu dilakukan)
 6. "docker-compose exec siruntu_app php artisan key:generate" # generate key laravel
 
-
+---
 untuk command tambahan:
 - "docker-compose logs siruntu_nginx" # melihat log dari service nginx
 - "docker-compose pause" # menghentikan sementara service2 yang berjalan
 - "docker-compose unpause" # menjalankan kembali service2 yang berhenti sementara
 - "docker-compose down" # [!peringatan] menghapus semua container, network, dan volume pada compose ini
 
-mengubah settingan database (jika tidak menggunakan service database pada docker compose)
+mengubah settingan database (jika tidak menggunakan service database pada docker compose):
 1. "docker exec -it siruntu-app bash" # masuk ke dalam container untuk melihat/mengubah file
 2. "nano .env"
 3. ubah DB_HOST menjadi "host.docker.internal" # khusus windows dan mac, untuk linux bisa dlihat pada thread berikut:
-    https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach
+ - https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach
+
+---
+untuk docker versi lama menggunakan ps (process status) untuk melihat listnya sedangkan docker versi yang lebih baru menggunakan
+ls (list), tidak ada bedanya hanya untuk UX saja.
+
+command docker yang sering dipakai:
+image:
+- `docker images`, `docker images ps`, `docker images ls`, `docker image ls` #melihat image docker yang tersedia di local
+ - tambahkan flag `-q` atau `--quiet` untuk mendapatkan id imagenya saja.
+ - tambahkan flag `-a` atau `--all` untuk mendapatkan semua image yang tersedia (default hides intermediate images)
+
+container:
+- `docker container ls`, `docker container ps`, `docker ps`
+ - flag `-q`, `--quiet` untuk mendapatkan id container saja.
+ - flag `-a`, `--all` untuk mendapatkan semua container yang tersedia (default shows just running)
+- `docker container rm`
+ - flag `-f`, `--force` untuk menghapus container yang masih running (uses SIGKILL)
+ - flag `-l`, `--link` untuk remove specific link
+ - flag `-v`, `--volumes` untuk remove anonymous volumes yang terhubung dengan container
+
+
+---
+catatan:
+- docker container/image [ps/ls] # untuk command ps dan ls sama saja
