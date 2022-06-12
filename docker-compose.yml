@@ -8,7 +8,7 @@ services:
         uid: 1000
       context: ./
       dockerfile: siruntu-app.dockerfile
-    image: irhamsahbana/siruntu-app:1.0.0
+    image: irhamsahbana/siruntu-app:latest
     container_name: siruntu-app
     restart: unless-stopped
     working_dir: /var/www/
