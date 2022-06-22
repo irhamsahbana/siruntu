@@ -11,24 +11,21 @@ services:
     image: irhamsahbana/siruntu-app:latest
     container_name: siruntu-app
     restart: unless-stopped
-    working_dir: /var/www/
     volumes:
       - ./:/var/www
     networks:
       - siruntu
     depends_on:
       - siruntu_db
-    links:
-      - siruntu_db
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
   siruntu_nginx:
-    image: nginx:1.21.6-alpine
+    image: nginx:stable-alpine
     container_name: siruntu-nginx
     restart: unless-stopped
     ports:
-      - 8000:80
+      - 80:80
     volumes:
       - ./:/var/www
       - ./etc/nginx:/etc/nginx/conf.d
@@ -38,11 +35,9 @@ services:
   siruntu_db:
     container_name: siruntu-db
     image: mariadb:10.3
-    restart: always
+    restart: unless-stopped
     networks:
       - siruntu
-    ports:
-      - "3306:3306"
     volumes:
       - ./data:/var/lib/mysql
       - ./etc/my.cnf.d:/etc/mysql/conf.d
@@ -65,9 +60,20 @@ services:
   siruntu_coturn:
     image: instrumentisto/coturn:4
     container_name: siruntu-coturn
+    restart: unless-stopped
     volumes:
       - ./etc/coturn.d/coturn.conf:/etc/coturn/turnserver.conf
     network_mode: "host"
+
+  siruntu_signaling:
+    build:
+      context: ./
+      dockerfile: siruntu-signaling.dockerfile
+    image: irhamsahbana/siruntu-signaling:latest
+    container_name: siruntu-signaling
+    restart: unless-stopped
+    ports:
+      - 3000:3000
 
 networks:
   siruntu: {}

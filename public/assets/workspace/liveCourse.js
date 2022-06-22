@@ -1,9 +1,18 @@
 $(document).ready(function () {
-    $('#btn-change-mode').on('click', function () {
-        alert('tombol ubah mode diklik');
+    let webRtcPeer;
+    let video = $('#video');
+    let room = $('#room').val();
+
+    let btnShareVideo = $('btn-share-video');
+    let btnShareScreen = $('btn-share-screen');
+
+
+    btnShareScreen.on('click', function () {
+        shareScreen();
     });
 
-    $('#btn-send-chat').on('click', function () {
-        alert('tombol kirim chat diklik');
+    btnShareVideo.on('click', function () {
+        shareVideo();
     });
+                    
 });

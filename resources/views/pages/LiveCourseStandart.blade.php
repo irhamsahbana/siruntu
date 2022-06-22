@@ -104,10 +104,18 @@
         <x-row>
             <x-col :col="2">
                 <button
-                    type="button"
-                    title="Mulai broadcast"
+                    id="btn-share-video"
+                    title="Mulai broadcast kamera"
                     class="btn btn-primary btn-sm">
                     <i class="fas fa-video"></i></button>
+            </x-col>
+
+            <x-col :col="2">
+                <button
+                    id="btn-share-screen"
+                    title="Mulai braodcast screen"
+                    class="btn btn-primary btn-sm">
+                    <i class="fas fa-window-maximize"></i></button>
             </x-col>
 
             <x-col :col="2">
