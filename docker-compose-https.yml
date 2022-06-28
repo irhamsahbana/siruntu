@@ -26,10 +26,12 @@ services:
     restart: unless-stopped
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./:/var/www
-      - ./etc/nginx:/etc/nginx/conf.d
+      - ./etc/nginx-https:/etc/nginx/conf.d
       - ./volumes/logs/nginx:/var/log/nginx
+      - /etc/letsencrypt:/etc/letsencrypt # this config for get cert from local
     networks:
       - siruntu
 
@@ -37,6 +39,8 @@ services:
     container_name: siruntu-db
     image: mariadb:10.3
     restart: unless-stopped
+    ports:
+      - 3306:3306
     networks:
       - siruntu
     volumes:
@@ -75,6 +79,8 @@ services:
     restart: unless-stopped
     ports:
       - 3000:3000
+    networks:
+      - siruntu
 
 networks:
   siruntu: {}

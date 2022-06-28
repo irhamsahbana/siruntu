@@ -23,7 +23,7 @@
     <input type="hidden" id="room" value="{{ \Request::segment(3) }}">
 
     <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
-    <script src="{{ asset('assets') }}/workspace/socketClient.js"></script>
-    <script src="{{ asset('assets') }}/workspace/liveCourse.js"></script>
-    <script src="{{ asset('assets') }}/workspace/kurento-utils.js"></script>
+    <script src="{{ asset('assets') }}/workspace/socketClient.js?version={{ \Str::random(45) }}"></script>
+    <script src="{{ asset('assets') }}/workspace/liveCourse.js?version={{ \Str::random(45) }}"></script>
+    <script src="{{ asset('assets') }}/workspace/kurento-utils.js?version={{ \Str::random(45) }}"></script>
 @endpush

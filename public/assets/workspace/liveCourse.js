@@ -8,10 +8,10 @@ $(document).ready(function () {
 
 
     btnShareScreen.on('click', function () {
-        shareScreen();
+        shareScreen(); 
     });
 
-    btnShareVideo.on('click', function () {
+    btnShareVideo.on('click', function () { 
         shareVideo();
     });
                     
