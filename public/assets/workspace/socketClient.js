@@ -3,4 +3,8 @@
 
 // const socket = io(`${hostname}:${port}`);
 const socket = io('irhams.xyz');
-socket.on("connection");
+
+
+socket.on('connect', socket => {
+    console.log('do something when our client can connect to our signaling server');
+});

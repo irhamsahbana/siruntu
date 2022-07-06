@@ -7,4 +7,4 @@ COPY server.js ./
 
 RUN npm install
 
-CMD [ "node", "server.js" ]
+CMD [ "./node_modules/.bin/nodemon", "server.js", "--ignore", "vendor/"]

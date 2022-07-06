@@ -19,12 +19,13 @@
         "express": "^4.17.3",
         "kurento-client": "^6.16.0",
         "minimist": "^1.2.6",
+        "nodemon": "^2.0.18",
         "socket.io": "^4.4.1",
         "socket.io-client": "^4.4.1",
         "ws": "^8.5.0"
     },
-    "engines" : { 
-        "npm" : ">=7.0.0",
-        "node" : ">=16.0.0"
+    "engines": {
+        "npm": ">=7.0.0",
+        "node": ">=16.0.0"
     }
 }
