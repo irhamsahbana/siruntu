@@ -1,7 +1,7 @@
 <x-row>
     <x-col :col="8">
         <div class="embed-responsive embed-responsive-16by9">
-            <video class="embed-responsive-item" src="" allowfullscreen controls>
+            <video id="video" class="embed-responsive-item" src="" allowfullscreen controls>
                 <source src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0">
                     Your browser does not support the video tag.
             </video>
@@ -104,7 +104,7 @@
         <x-row>
             <x-col :col="2">
                 <button
-                    id="btn-share-video"
+                    id="broadcastWebcam"
                     title="Mulai broadcast kamera"
                     class="btn btn-primary btn-sm">
                     <i class="fas fa-video"></i></button>
@@ -112,7 +112,7 @@
 
             <x-col :col="2">
                 <button
-                    id="btn-share-screen"
+                    id="broadcastScreenshare"
                     title="Mulai braodcast screen"
                     class="btn btn-primary btn-sm">
                     <i class="fas fa-window-maximize"></i></button>
