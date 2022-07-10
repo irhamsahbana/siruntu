@@ -120,7 +120,6 @@
 
             <x-col :col="2">
                 <button
-                    type="button"
                     title="Mulai rekam broadcast"
                     class="btn btn-primary btn-sm">
                     <i class="fas fa-record-vinyl"></i></button>
@@ -128,11 +127,28 @@
 
             <x-col :col="2">
                 <button
+                    id="terminate"
+                    title="Hentikan broadcasting"
+                    class="btn btn-primary btn-sm">
+                    <i class="fas fa-stop-circle"></i></button>
+            </x-col>
+
+            <x-col :col="2">
+                <button
+                    id="view"
+                    title="viewing broadcasting"
+                    class="btn btn-primary btn-sm">
+                    <i class="fas fa-eye"></i></button>
+            </x-col>
+
+
+            {{-- <x-col :col="2">
+                <button
                     type="button"
                     title="Unggah file"
                     class="btn btn-primary btn-sm">
                     <i class="fas fa-file-upload"></i></button>
-            </x-col>
+            </x-col> --}}
 
             <x-col :col="2">
                 <button

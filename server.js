@@ -500,5 +500,5 @@ const joinRoom = (socket, data) => {
     socket.username = data.username;
     socket.role = data.role;
 
-    console.log(`Joined on room: ${data.room} with id : ${data.username} with role : ${data.role}`);
+    console.log(`Joined on room: ${data.room} \nwith id: ${data.username} \nwith role: ${data.role}`);
 };

@@ -4,6 +4,27 @@
 // const socket = io(`${hostname}:${port}`);
 
 // in case signaling server is same with your application domain
+// var getScreenConstraints = (function(error, screen_constraints) {
+//     if (error) {
+//         return alert(error);
+//     }
+
+//     if(screen_constraints.canRequestAudioTrack) {
+//         // you can capture speakers
+//         // getUserMedia({audio:screen_constraints})
+//     }
+
+//     navigator.mediaDevices.getUserMedia({
+//         video: screen_constraints
+//     }).then(function(stream) {
+//         var video = document.querySelector('video');
+//         video.src = URL.createObjectURL(stream);
+//         video.play();
+//     }).catch(function(error) {
+//         alert(JSON.stringify(error, null, '\t'));
+//     });
+// });
+
 const socket = io(location.host);
 
 let webRtcPeer;
@@ -15,11 +36,12 @@ const room = $('#room').val();
 
 $(function() {
     document.getElementById('broadcastWebcam').addEventListener('click', function() { presenter(); } );
-    document.getElementById('broadcastScreenshare').addEventListener('click', function() { presenter('screen'); } );
+    document.getElementById('broadcastScreenshare').addEventListener('click', function() { presenterScreenshare(); } );
 	document.getElementById('terminate').addEventListener('click', function() { stop(); } );
+	document.getElementById('view').addEventListener('click', function() { viewer(); } );
 });
 
-socket.on('connect', socket => {
+socket.on('connect', () => {
     console.log('do something when our client can connect to our signaling server');
 
     let data = {
@@ -77,20 +99,54 @@ function viewerResponse(message) {
     }
 }
 
-function presenter(sendSource = 'webcam') {
+function presenter() {
     if (!webRtcPeer) {
-        // showSpinner(video);
+        let constraints = {
+            audio: true,
+            video: {
+                width: 640,
+                framerate: 15
+            }
+          }
 
         let options = {
             localVideo: video,
             onicecandidate: onIceCandidate,
-            sendSource: sendSource
+            mediaConstraints: constraints,
         }
 
         webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
             if(error) return onError(error);
             this.generateOffer(onOfferPresenter);
         });
+    }
+}
+
+function presenterScreenshare() {
+    if (!webRtcPeer) {
+        function onGetStream(stream) {
+            video.srcObject = stream;
+            let options = {
+                onicecandidate: onIceCandidate,
+                videoStream: stream
+            };
+
+            webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
+                if(error) return onError(error);
+
+                this.generateOffer(onOfferPresentScreen);
+            });
+        }
+
+        if(navigator.mediaDevices.getDisplayMedia) {
+            navigator.mediaDevices.getDisplayMedia({ video: false })
+                                    .then(stream => { onGetStream(stream); }, onError)
+                                    .catch(onError);
+        } else if(navigator.getDisplayMedia) {
+            navigator.getDisplayMedia({ video: false })
+                        .then(stream => { onGetStream(stream); }, onError)
+                        .catch(onError);
+        }
     }
 }
 
@@ -168,6 +224,10 @@ function sendMessage(message) {
  console.log('Sending message: ' + message);
 
  socket.emit(message);
+}
+
+function onError(error) {
+	console.log('onError', error)
 }
 
 function getRoom() {
