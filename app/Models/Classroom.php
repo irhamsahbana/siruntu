@@ -22,7 +22,7 @@ class Classroom extends Model
     public function participants()
     {
         return $this->belongsToMany(
-            person::class,
+            Person::class,
             'classroom_participants',
             'classroom_id',
             'person_id'

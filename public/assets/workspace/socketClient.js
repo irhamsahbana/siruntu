@@ -28,71 +28,86 @@
 const socket = io(location.host);
 
 let webRtcPeer;
-let video = document.getElementById('video');
+let video = document.getElementById("video");
 let autoView = true;
-let role = 'presenter';
-let role2 = 'viewer';
-const room = $('#room').val();
+let role = "presenter";
+let role2 = "viewer";
+const room = $("#room").val();
 
-$(function() {
-    document.getElementById('broadcastWebcam').addEventListener('click', function() { presenter(); } );
-    document.getElementById('broadcastScreenshare').addEventListener('click', function() { presenterScreenshare(); } );
-	document.getElementById('terminate').addEventListener('click', function() { stop(); } );
-	document.getElementById('view').addEventListener('click', function() { viewer(); } );
+$(function () {
+    document
+        .getElementById("broadcastWebcam")
+        .addEventListener("click", function () {
+            presenter();
+        });
+    document
+        .getElementById("broadcastScreenshare")
+        .addEventListener("click", function () {
+            presenterScreenshare();
+        });
+    document.getElementById("terminate").addEventListener("click", function () {
+        stop();
+    });
+    document.getElementById("view").addEventListener("click", function () {
+        viewer();
+    });
 });
 
-socket.on('connect', () => {
-    console.log('do something when our client can connect to our signaling server');
+socket.on("connect", () => {
+    console.log(
+        "do something when our client can connect to our signaling server"
+    );
 
     let data = {
         room: getRoom(),
-        role: role
+        role: role,
     };
 
-    socket.emit('subscribeToStream', data);
+    socket.emit("subscribeToStream", data);
 });
 
-socket.on('message', function(message) {
-    console.info('received message: ' + message.data);
+socket.on("message", function (message) {
+    console.info("received message: " + message.data);
 
     switch (message.id) {
-        case 'PresenterResponse':
+        case "PresenterResponse":
             presenterResponse(message);
             break;
-        case 'viewerResponse':
+        case "viewerResponse":
             viewerResponse(message);
             break;
-        case 'stopCommunication':
+        case "stopCommunication":
             dispose();
             break;
-        case 'iceCandidate':
+        case "iceCandidate":
             webRtcPeer.addIceCandidate(message.candidate);
             break;
-        case 'streamStarted':
+        case "streamStarted":
             if (autoView) viewer();
         default:
-            console.error('Unrecognized message: ', message);
-
+            console.error("Unrecognized message: ", message);
     }
 });
 
 function presenterResponse(message) {
-    if (message.response != 'accepted') {
-        let errorMsg = message.message ? message.message : 'Unknow error';
+    if (message.response != "accepted") {
+        let errorMsg = message.message ? message.message : "Unknow error";
 
-        console.warn('Call not accepted for the following reason: ' + errorMsg);
+        console.warn("Call not accepted for the following reason: " + errorMsg);
         dispose();
     } else {
-        console.info(`From presenter, webRTCPeer ${webRtcPeer}, sdpAnswer ${message.sdpAnswer}`)
+        console.info(
+            `From presenter, webRTCPeer ${webRtcPeer}, sdpAnswer ${message.sdpAnswer}`
+        );
         webRtcPeer.processAnswer(message.sdpAnswer);
     }
 }
 
 function viewerResponse(message) {
-    if (message.response != 'accepted') {
-        let errorMsg = message.message ? message.message : 'Unknow error';
+    if (message.response != "accepted") {
+        let errorMsg = message.message ? message.message : "Unknow error";
 
-        console.warn('Call not accepted for the following reason: ' + errorMsg);
+        console.warn("Call not accepted for the following reason: " + errorMsg);
         dispose();
     } else {
         webRtcPeer.processAnswer(message.sdpAnswer);
@@ -105,20 +120,23 @@ function presenter() {
             audio: true,
             video: {
                 width: 640,
-                framerate: 15
-            }
-          }
+                framerate: 15,
+            },
+        };
 
         let options = {
             localVideo: video,
             onicecandidate: onIceCandidate,
             mediaConstraints: constraints,
-        }
+        };
 
-        webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function(error) {
-            if(error) return onError(error);
-            this.generateOffer(onOfferPresenter);
-        });
+        webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(
+            options,
+            function (error) {
+                if (error) return onError(error);
+                this.generateOffer(onOfferPresenter);
+            }
+        );
     }
 }
 
@@ -128,24 +146,33 @@ function presenterScreenshare() {
             video.srcObject = stream;
             let options = {
                 onicecandidate: onIceCandidate,
-                videoStream: stream
+                videoStream: stream,
             };
 
-            webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(options, function(error) {
-                if(error) return onError(error);
+            webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendrecv(
+                options,
+                function (error) {
+                    if (error) return onError(error);
 
-                this.generateOffer(onOfferPresentScreen);
-            });
+                    this.generateOffer(onOfferPresentScreen);
+                }
+            );
         }
 
-        if(navigator.mediaDevices.getDisplayMedia) {
-            navigator.mediaDevices.getDisplayMedia({ video: false })
-                                    .then(stream => { onGetStream(stream); }, onError)
-                                    .catch(onError);
-        } else if(navigator.getDisplayMedia) {
-            navigator.getDisplayMedia({ video: false })
-                        .then(stream => { onGetStream(stream); }, onError)
-                        .catch(onError);
+        if (navigator.mediaDevices.getDisplayMedia) {
+            navigator.mediaDevices
+                .getDisplayMedia({ video: false })
+                .then((stream) => {
+                    onGetStream(stream);
+                }, onError)
+                .catch(onError);
+        } else if (navigator.getDisplayMedia) {
+            navigator
+                .getDisplayMedia({ video: false })
+                .then((stream) => {
+                    onGetStream(stream);
+                }, onError)
+                .catch(onError);
         }
     }
 }
@@ -154,8 +181,8 @@ function onOfferPresenter(error, offerSdp) {
     if (error) return onError(error);
 
     let message = {
-        id : 'presenter',
-        sdpOffer : offerSdp
+        id: "presenter",
+        sdpOffer: offerSdp,
     };
 
     sendMessage(message);
@@ -167,35 +194,38 @@ function viewer() {
 
         let options = {
             remoteVideo: video,
-            onicecandidate : onIceCandidate
-        }
+            onicecandidate: onIceCandidate,
+        };
 
-        webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function(error) {
-            if(error) return onError(error);
+        webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(
+            options,
+            function (error) {
+                if (error) return onError(error);
 
-            this.generateOffer(onOfferViewer);
-        });
+                this.generateOffer(onOfferViewer);
+            }
+        );
     }
 }
 
 function onOfferViewer(error, offerSdp) {
-    if (error) return onError(error)
+    if (error) return onError(error);
 
     let message = {
-        id : 'viewer',
-        sdpOffer : offerSdp
-    }
+        id: "viewer",
+        sdpOffer: offerSdp,
+    };
 
     sendMessage(message);
 }
 
 function onIceCandidate(candidate) {
-    console.log('Local candidate: ' + candidate);
+    console.log("Local candidate: ", candidate);
 
     let message = {
-       id : 'onIceCandidate',
-       candidate : candidate
-    }
+        id: "onIceCandidate",
+        candidate: candidate,
+    };
 
     sendMessage(message);
 }
@@ -203,8 +233,8 @@ function onIceCandidate(candidate) {
 function stop() {
     if (webRtcPeer) {
         let message = {
-            id : 'stop'
-        }
+            id: "stop",
+        };
 
         sendMessage(message);
         dispose();
@@ -221,13 +251,13 @@ function dispose() {
 }
 
 function sendMessage(message) {
- console.log('Sending message: ' + message);
+    console.log("Sending message: ", message);
 
- socket.emit(message);
+    socket.emit("message", message);
 }
 
 function onError(error) {
-	console.log('onError', error)
+    console.log("onError", error);
 }
 
 function getRoom() {

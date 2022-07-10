@@ -12,7 +12,7 @@ const minimist = require('minimist');
 let argv = minimist(process.argv.slice(2), {
     default: {
         as_uri: 'https://irhams.xyz:3000/',
-        ws_uri: 'ws://localhost:8888/kurento'
+        ws_uri: 'https://irhams.xyz:8888/kurento'
     }
 });
 
@@ -26,7 +26,7 @@ let noPresenterMessage = 'No active presenter. Try again later...';
 
 io.on("connection", socket => {
     console.log("a user connected to signaling server");
-    console.log(`Connection received with sessionId ${socket.id}`);
+    // console.log(`Connection received with sessionId ${socket.id}`);
 
     socket.on("error", function () {
         console.log(`Connection ${socket.id} error`);
@@ -38,10 +38,11 @@ io.on("connection", socket => {
     });
 
     socket.on("message", (message) => {
-        console.log(`Connection ${socket.id} received message: ${message}`);
+        console.log(`Connection ${socket.id} received message: `,"\x1b[36m", message);
 
         switch (message.id) {
             case "presenter":
+                console.log("presenter case");
                 startPresenter(
                     socket,
                     message.sdpOffer,

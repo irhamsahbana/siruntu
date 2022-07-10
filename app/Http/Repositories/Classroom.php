@@ -38,8 +38,8 @@ class Classroom extends AbstractRepository
     {
         if (empty($this->model->mode_id))
             $this->model->mode_id = Category::where('group_by', 'classroom_modes')
-                                            ->where('name', 'normal'
-                                            )->first()->id;
+                                            ->where('name', 'normal')
+                                            ->first()->id;
     }
 
     protected function afterSave()
