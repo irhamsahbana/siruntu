@@ -63,26 +63,32 @@ socket.on("connect", () => {
         role: role,
     };
 
-    socket.emit("subscribeToStream", data);
+    sendMessage({id: "subscribeToStream", data: data})
+    // socket.emit("subscribeToStream", data);
 });
 
 socket.on("message", function (message) {
-    console.info("received message: " + message.data);
+    console.info("received message: ", message);
 
     switch (message.id) {
         case "PresenterResponse":
+            console.info("case PresenterRespose")
             presenterResponse(message);
             break;
         case "viewerResponse":
+            console.info("case viewerResponse")
             viewerResponse(message);
             break;
         case "stopCommunication":
+            console.info("case stopCommunication")
             dispose();
             break;
         case "iceCandidate":
+            console.info("case iceCandidate")
             webRtcPeer.addIceCandidate(message.candidate);
             break;
         case "streamStarted":
+            console.info("case streamStarted")
             if (autoView) viewer();
         default:
             console.error("Unrecognized message: ", message);
