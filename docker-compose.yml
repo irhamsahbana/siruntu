@@ -13,6 +13,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./:/var/www
+      - ./volumes/share:/share
     networks:
       - siruntu
     depends_on:
@@ -42,6 +43,7 @@ services:
     volumes:
       - ./volumes/mysql:/var/lib/mysql
       - ./etc/my.cnf.d:/etc/mysql/conf.d
+      - ./volumes/share:/share
     env_file:
      - .env.docker
 
