@@ -15,6 +15,7 @@ use App\Http\Repositories\Classroom;
 use App\Services\Classroom as Service;
 
 use App\Models\Classroom as Model;
+use App\Models\User;
 
 class ClassroomController extends Controller
 {
@@ -51,10 +52,13 @@ class ClassroomController extends Controller
                         ->where('person_id', Auth::user()->person_id)
                         ->exists();
 
-        if (($groups->contains('lecturer') || $groups->contains('learner')) && $registered)
-            return view('pages.LiveCourseIndex');
-        else
+        if (($groups->contains('lecturer') || $groups->contains('learner')) && $registered) {
+            $profile = User::where('id', Auth::id())->with(['person.category'])->first();
+
+            return view('pages.LiveCourseIndex', compact('profile'));
+        } else {
             return redirect()->back()->withErrors('Anda tidak terdaftar pada kelas.');
+        }
     }
 
     public function store(ClassroomStoreReq $request)

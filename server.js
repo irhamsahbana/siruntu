@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
                 break;
             case "presenter":
                 console.info("case presenter");
-                startPresenter(socket, message.sdpOffer, (error, sdpAnswer) => {
+                startPresenter(socket, message.sdpOffer, function(error, sdpAnswer) {
                     if (error) {
                         socket.emit("message", {
                             id: "presenterResponse",
@@ -188,7 +188,7 @@ function startPresenter(socket, sdpOffer, callback) {
                     }
                 }
 
-                webRtcEndpoint.on("IceCandidateFound", function (event) {
+                webRtcEndpoint.on("OnIceCandidate", function (event) {
                     let candidate = kurento.getComplexType("IceCandidate")(
                         event.candidate
                     );
@@ -392,6 +392,7 @@ function onIceCandidate(socket, _candidate) {
 }
 
 function clearCandidatesQueue(socket) {
+    console.log('clearCandidatesQueue function', candidatesQueue);
     if (candidatesQueue[socket.id]) delete candidatesQueue[socket.id];
 }
 
@@ -413,8 +414,11 @@ const subscribeToStream = (socket, data) => {
 };
 
 const getRoom = (socket) => {
+    console.log('check room dlu yah mas', rooms[socket.room]);
     if (rooms[socket.room] == undefined) createRoom(socket.room);
 
+    console.log('ini room nya  mas', rooms[socket.room]);
+    console.log(rooms, 'room yang tersedia sekarang')
     return rooms[socket.room];
 };
 
@@ -425,20 +429,23 @@ const createRoom = (room) => {
         viewers: [],
         chat: [],
     };
+
+    console.log('room sekarang', rooms)
 };
 
 const joinRoom = (socket, data) => {
+    console.log(socket.rooms.length, 'panjangnya')
     while (socket.rooms.length) {
         socket.leave(socket.rooms[0]);
     }
 
     socket.join(data.room);
 
-    // socket.room = data.room;
+    socket.room = data.room;
     socket.username = data.username;
     socket.role = data.role;
 
     console.log(
-        `Joined on room: ${data.room} \nwith id: ${data.username} \nwith role: ${data.role}`
+        `Joined on room: ${socket.room} \nwith id: ${socket.username} \nwith role: ${socket.role}`
     );
 };

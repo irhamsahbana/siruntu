@@ -30,8 +30,8 @@ const socket = io(location.host);
 let webRtcPeer;
 let video = document.getElementById("video");
 let autoView = true;
-let role = "presenter";
-let role2 = "viewer";
+let personCategory = document.getElementById('person_category').value;
+let role = personCategory == 'lecturer' ? 'presenter' : 'viewer';
 const room = $("#room").val();
 
 $(function () {
@@ -96,6 +96,7 @@ socket.on("message", function (message) {
 });
 
 function presenterResponse(message) {
+    console.log('presenterResponse function', message);
     if (message.response != "accepted") {
         let errorMsg = message.message ? message.message : "Unknow error";
 
@@ -190,6 +191,8 @@ function onOfferPresenter(error, offerSdp) {
         id: "presenter",
         sdpOffer: offerSdp,
     };
+
+    console.log('onOfferPresenter function', message)
 
     sendMessage(message);
 }
