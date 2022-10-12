@@ -13,6 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/data
 
 /etc/coturn.d/coturn.conf
 /.env.docker
