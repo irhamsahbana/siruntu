@@ -21,7 +21,7 @@ let argv = minimist(process.argv.slice(2), {
  */
 let candidatesQueue = {};
 let kurentoClient = null;
-const rooms = [];
+const rooms = {};
 let noPresenterMessage = "No active presenter. Try again later...";
 
 io.on("connection", (socket) => {
@@ -37,14 +37,15 @@ io.on("connection", (socket) => {
     });
 
     socket.on("message", (message) => {
-        console.log(`Connection ${socket.id} received message: `,"\x1b[36m", message);
+        console.log(`********************************************************* ON MESSAGE *********************************************************`);
+        console.log(`Connection ${socket.id} received message:`);
+        console.log(`${JSON.stringify(message, null, 2)}`);
 
         switch (message.id) {
             case "subscribeToStream":
                 subscribeToStream(socket, message.data);
                 break;
             case "presenter":
-                console.info("case presenter");
                 startPresenter(socket, message.sdpOffer, function(error, sdpAnswer) {
                     if (error) {
                         socket.emit("message", {
@@ -96,25 +97,12 @@ io.on("connection", (socket) => {
                 break;
 
             case "onIceCandidate":
-                console.info("case onIceCandidate");
                 onIceCandidate(socket, message.candidate);
                 break;
             default:
                 console.log("no id message that matched :(");
         }
     });
-
-    // socket.on('subscribeToStream', data => {
-    //     let message = {
-    //         room: data.room,
-    //         username: socket.id,
-    //         role: data.role
-    //     };
-
-    //     joinRoom(socket, message);
-    //     let room = getRoom(socket);
-    //     if (room.presenter) socket.emit('streamStarted');
-    // });
 });
 
 server.listen(3000, () => {
@@ -133,9 +121,7 @@ function startPresenter(socket, sdpOffer, callback) {
 
     if (room.presenter !== null) {
         stop(socket);
-        return callback(
-            "Another user is currently acting as presenter. Try again later ..."
-        );
+        return callback("Another user is currently acting as presenter. Try again later ...");
     }
 
     room.presenter = {
@@ -313,16 +299,10 @@ function getKurentoClient(callback) {
 
     kurento(argv.ws_uri, function (error, _kurentoClient) {
         if (error) {
-            console.log(
-                "Could not find media server at address " + argv.ws_uri
-            );
-            return callback(
-                "Could not find media server at address" +
-                    argv.ws_uri +
-                    ". Exiting with error " +
-                    error
-            );
+            console.log(`Could not find media server at address ${argv.ws_uri}`);
+            return callback(`Could not find media server at address ${argv.ws_uri}. Exiting with error ${error}`);
         }
+
         kurentoClient = _kurentoClient;
         callback(null, kurentoClient);
     });
@@ -367,6 +347,7 @@ const stopViewers = (socket) => {
 };
 
 function onIceCandidate(socket, _candidate) {
+    console.log(`========================== function onIceCandidate ===============================`);
     let candidate = kurento.getComplexType("IceCandidate")(_candidate);
     let room = getRoom(socket);
 
@@ -375,24 +356,31 @@ function onIceCandidate(socket, _candidate) {
         room.presenter.id == socket.id &&
         room.presenter.webRtcEndpoint
     ) {
-        console.info("Sending presenter candidate");
+        console.log(`========================== function onIceCandidate ===============================`);
+        console.log("Sending presenter candidate");
         room.presenter.webRtcEndpoint.addIceCandidate(candidate);
     } else if (
         room.viewers[socket.id] &&
         room.viewers[socket.id].webRtcEndpoint
     ) {
-        console.info("Sending viewer candidate");
+        console.log(`========================== function onIceCandidate ===============================`);
+        console.log("Sending viewer candidate");
         room.viewer[socket.id].webRtcEndpoint.addIceCandidate(candidate);
     } else {
-        console.info("Queueing candidate");
-        if (!candidatesQueue[socket.id]) candidatesQueue[socket.id] = [];
+        console.log(`========================== function onIceCandidate ===============================`);
+        console.log("Queueing candidate");
+        if (!candidatesQueue[socket.id]) {
+            console.log(`initializing candidatesQueue[${socket.id}]`);
+            candidatesQueue[socket.id] = [];
+        }
 
         candidatesQueue[socket.id].push(candidate);
     }
 }
 
 function clearCandidatesQueue(socket) {
-    console.log('clearCandidatesQueue function', candidatesQueue);
+    console.log(`========================== function clearCandidatesQueue ===============================`);
+    console.log(`candidatesQueue[${socket.id}]`, candidatesQueue[socket.id]);
     if (candidatesQueue[socket.id]) delete candidatesQueue[socket.id];
 }
 
@@ -402,41 +390,51 @@ function clearCandidatesQueue(socket) {
  */
 
 const subscribeToStream = (socket, data) => {
-    let message = {
+    console.log(`========================== function subscribeToStream ===============================`);
+    const message = {
         room: data.room,
         username: socket.id,
         role: data.role,
     };
 
+    console.log('message', message);
     joinRoom(socket, message);
-    let room = getRoom(socket);
+    const room = getRoom(socket);
+
+    console.log(`========================== function subscribeToStream ===============================`);
+    console.log(`room:`, room);
     if (room.presenter) socket.emit("message", { id: "streamStarted" });
 };
 
 const getRoom = (socket) => {
-    console.log('check room dlu yah mas', rooms[socket.room]);
-    if (rooms[socket.room] == undefined) createRoom(socket.room);
+    console.log(`========================== function getRoom ===============================`);
+    if (rooms[socket.room] == undefined) {
+        console.log(`there is no room ${socket.room} in const rooms object, so we create it`);
+        createRoom(socket.room);
+    } else {
+        console.log(`there is room ${socket.room} in const rooms object`);
+    }
 
-    console.log('ini room nya  mas', rooms[socket.room]);
-    console.log(rooms, 'room yang tersedia sekarang')
     return rooms[socket.room];
 };
 
 const createRoom = (room) => {
+    console.log(`========================== function createRoom ===============================`);
+    console.log(`create room ${room} in const rooms object`);
     rooms[room] = {
         presenter: null,
         pipeline: null,
         viewers: [],
         chat: [],
     };
-
-    console.log('room sekarang', rooms)
 };
 
 const joinRoom = (socket, data) => {
-    console.log(socket.rooms.length, 'panjangnya')
-    while (socket.rooms.length) {
-        socket.leave(socket.rooms[0]);
+    console.log(`========================== function joinRoom ===============================`);
+    console.log(`join socket room ${data.room}`);
+    while (socket.rooms.size > 1) {
+        console.log('there is a room than one so leave all room');
+        socket.leaveAll();
     }
 
     socket.join(data.room);
@@ -446,6 +444,6 @@ const joinRoom = (socket, data) => {
     socket.role = data.role;
 
     console.log(
-        `Joined on room: ${socket.room} \nwith id: ${socket.username} \nwith role: ${socket.role}`
+        `Joined on room: ${socket.room} \n\twith id: ${socket.username} \n\twith role: ${socket.role}`
     );
 };

@@ -30,8 +30,8 @@ const socket = io(location.host);
 let webRtcPeer;
 let video = document.getElementById("video");
 let autoView = true;
-let personCategory = document.getElementById('person_category').value;
-let role = personCategory == 'lecturer' ? 'presenter' : 'viewer';
+const personCategory = document.getElementById('person_category').value;
+const role = personCategory == 'lecturer' ? 'presenter' : 'viewer';
 const room = $("#room").val();
 
 $(function () {
