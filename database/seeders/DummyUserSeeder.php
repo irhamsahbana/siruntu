@@ -75,7 +75,7 @@ class DummyUserSeeder extends Seeder
             $user = new User();
             $name = explode(' ', $person->name);
 
-            $user->username = strtolower($name[1]);
+            $user->username = strtolower($name[0]);
             $user->person_id = $person->id;
             $user->name = $person->name;
             $user->email = $person->email;
@@ -85,7 +85,7 @@ class DummyUserSeeder extends Seeder
             $user = new User();
             $name = explode(' ', $person->name);
 
-            $user->username = strtolower($name[1]) . '_' . $person->id;
+            $user->username = strtolower($name[0]) . '_' . $person->id;
             $user->person_id = $person->id;
             $user->name = $person->name;
             $user->email = $person->email;

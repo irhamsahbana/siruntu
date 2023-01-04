@@ -48,7 +48,7 @@ services:
      - .env.docker
 
   siruntu_kurento:
-    image: kurento/kurento-media-server:6.16.0
+    image: kurento/kurento-media-server:6.18.0
     container_name: siruntu-kurento
     restart: unless-stopped
     ports:

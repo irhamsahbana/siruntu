@@ -13,8 +13,6 @@ class DummyClassroomParticipantSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\ClassroomParticipant::factory()->count(200)->create();
-
         $classrooms = \App\Models\Classroom::all();
         $people = \App\Models\Person::all();
         $totalPeople = $people->count();
